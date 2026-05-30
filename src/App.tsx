@@ -46,6 +46,13 @@ function App() {
           />
         </Routes>
       </main>
+
+      <footer className="app-footer">
+        <p className="app-footer__name">Fruad Hunter</p>
+        <p className="app-footer__copyright">
+          © {new Date().getFullYear()} Fruad Hunter
+        </p>
+      </footer>
     </>
   )
 }

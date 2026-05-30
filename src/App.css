@@ -91,7 +91,31 @@
 }
 
 .main {
+  flex: 1;
   padding: 4.5rem 1.5rem;
+}
+
+.app-footer {
+  margin-top: auto;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  text-align: center;
+}
+
+.app-footer__name {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-h);
+}
+
+.app-footer__copyright {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text);
 }
 
 @media (max-width: 850px) {
@@ -116,6 +140,10 @@
 
   .main {
     padding: 2rem 1rem;
+  }
+
+  .app-footer {
+    padding: 1.25rem 1rem;
   }
 }
 
