@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import './FlagDetailsPage.css'
 
 type Transaction = {
   transaction_id: string
@@ -67,19 +68,50 @@ function parseTransactionsCsv(text: string): Transaction[] {
         is_flagged: row.is_flagged === 'True',
       }
     })
-    .sort((a, b) => {
-      if (a.is_flagged !== b.is_flagged) {
-        return a.is_flagged ? -1 : 1
-      }
+}
 
-      return b.fraud_score - a.fraud_score
-    })
+function getRiskClass(score: number): string {
+  if (score >= 80) return 'review-card__risk--high'
+  if (score >= 50) return 'review-card__risk--medium'
+  return 'review-card__risk--low'
+}
+
+function getRiskLabel(score: number): string {
+  if (score >= 80) return 'High risk'
+  if (score >= 50) return 'Medium risk'
+  return 'Low risk'
+}
+
+function CollapsedEntry({
+  transaction,
+  badge,
+  reviewed = false,
+}: {
+  transaction: Transaction
+  badge: string
+  reviewed?: boolean
+}) {
+  return (
+    <article
+      className={`review-card${reviewed ? ' review-card--reviewed' : ''}`}
+    >
+      <div className="review-card__summary">
+        <span className="review-card__summary-text">
+          <span>{transaction.transaction_id}</span>
+          <span>{transaction.card_id}</span>
+          <span>{transaction.merchant_name}</span>
+        </span>
+        <span className="review-card__badge">{badge}</span>
+      </div>
+    </article>
+  )
 }
 
 function FlagDetailsPage() {
   const [data, setData] = useState<Transaction[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
     fetch('/data/transactions_flagged.csv')
@@ -104,76 +136,175 @@ function FlagDetailsPage() {
       })
   }, [])
 
-  const getColor = (score: number): string => {
-    if (score >= 80) return '#ff4d4d'
-    if (score >= 50) return '#ffd11a'
-    return '#66cc66'
-  }
+  const flaggedQueue = useMemo(
+    () =>
+      data
+        .filter((row) => row.is_flagged)
+        .sort((a, b) => b.fraud_score - a.fraud_score),
+    [data],
+  )
 
-  const getRiskLabel = (score: number): string => {
-    if (score >= 80) return '🔴 HIGH'
-    if (score >= 50) return '🟡 MEDIUM'
-    return '🟢 LOW'
+  const otherTransactions = useMemo(
+    () => data.filter((row) => !row.is_flagged),
+    [data],
+  )
+
+  const queueComplete = flaggedQueue.length > 0 && activeIndex >= flaggedQueue.length
+
+  function handleReviewAction() {
+    setActiveIndex((current) => current + 1)
   }
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial' }}>
-      <h1>💳 Fraud Detection Dashboard</h1>
+    <section className="review-queue">
+      <header className="review-queue__header">
+        <h1>Review Queue</h1>
+        <p className="review-queue__subtitle">
+          Work through flagged transactions one at a time.
+        </p>
+      </header>
 
-      {loading && <p>Loading transactions...</p>}
-      {error && <p role="alert">{error}</p>}
-      {!loading && !error && data.length === 0 && (
-        <p>No transactions found.</p>
+      {loading && <p>Loading review queue...</p>}
+      {error && (
+        <p className="review-queue__error" role="alert">
+          {error}
+        </p>
       )}
 
-      {!loading && !error && data.length > 0 && (
-        <table
-          style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            marginTop: '20px',
-          }}
-        >
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Card</th>
-              <th>Merchant</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th>Fraud Score</th>
-              <th>Risk</th>
-              <th>Reasons</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {data.map((row) => {
-              const color = getColor(row.fraud_score)
-
-              return (
-                <tr
-                  key={row.transaction_id}
-                  style={{
-                    backgroundColor: color,
-                    color: 'black',
-                  }}
-                >
-                  <td>{row.transaction_id}</td>
-                  <td>{row.card_id}</td>
-                  <td>{row.merchant_name}</td>
-                  <td>${row.amount.toFixed(2)}</td>
-                  <td>{row.is_flagged ? 'Flagged' : 'Not flagged'}</td>
-                  <td>{row.fraud_score}</td>
-                  <td>{getRiskLabel(row.fraud_score)}</td>
-                  <td>{row.flag_reasons || '—'}</td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+      {!loading && !error && flaggedQueue.length === 0 && (
+        <p>No flagged transactions in the queue.</p>
       )}
-    </div>
+
+      {!loading && !error && flaggedQueue.length > 0 && (
+        <>
+          {!queueComplete && (
+            <p className="review-queue__progress">
+              Reviewing {activeIndex + 1} of {flaggedQueue.length}
+            </p>
+          )}
+
+          {queueComplete && (
+            <p className="review-queue__complete" role="status">
+              Review queue complete. All flagged entries have been reviewed.
+            </p>
+          )}
+
+          <section className="review-queue__section" aria-label="Flagged queue">
+            <h2 className="review-queue__section-title">Flagged transactions</h2>
+            <div className="review-queue__list">
+              {flaggedQueue.map((transaction, index) => {
+                if (index < activeIndex) {
+                  return (
+                    <CollapsedEntry
+                      key={transaction.transaction_id}
+                      transaction={transaction}
+                      badge="Reviewed"
+                      reviewed
+                    />
+                  )
+                }
+
+                if (index === activeIndex && !queueComplete) {
+                  return (
+                    <article
+                      key={transaction.transaction_id}
+                      className="review-card review-card--active"
+                    >
+                      <div className="review-card__body">
+                        <span
+                          className={`review-card__risk ${getRiskClass(transaction.fraud_score)}`}
+                        >
+                          {getRiskLabel(transaction.fraud_score)} ·{' '}
+                          {transaction.fraud_score}
+                        </span>
+
+                        <p className="review-card__reason">
+                          <span className="review-card__reason-label">
+                            Why flagged
+                          </span>
+                          {transaction.flag_reasons || 'No reason provided.'}
+                        </p>
+
+                        <dl className="review-card__details">
+                          <div className="review-card__detail">
+                            <dt>ID</dt>
+                            <dd>{transaction.transaction_id}</dd>
+                          </div>
+                          <div className="review-card__detail">
+                            <dt>Card</dt>
+                            <dd>{transaction.card_id}</dd>
+                          </div>
+                          <div className="review-card__detail">
+                            <dt>Merchant</dt>
+                            <dd>{transaction.merchant_name}</dd>
+                          </div>
+                          <div className="review-card__detail">
+                            <dt>Amount</dt>
+                            <dd>${transaction.amount.toFixed(2)}</dd>
+                          </div>
+                        </dl>
+
+                        <div className="review-card__actions">
+                          <button
+                            type="button"
+                            className="review-card__action review-card__action--approve"
+                            onClick={handleReviewAction}
+                          >
+                            Approve
+                          </button>
+                          <button
+                            type="button"
+                            className="review-card__action review-card__action--dismiss"
+                            onClick={handleReviewAction}
+                          >
+                            Dismiss
+                          </button>
+                          <button
+                            type="button"
+                            className="review-card__action review-card__action--escalate"
+                            onClick={handleReviewAction}
+                          >
+                            Escalate
+                          </button>
+                        </div>
+                      </div>
+                    </article>
+                  )
+                }
+
+                return (
+                  <CollapsedEntry
+                    key={transaction.transaction_id}
+                    transaction={transaction}
+                    badge="Pending"
+                  />
+                )
+              })}
+            </div>
+          </section>
+
+          {otherTransactions.length > 0 && (
+            <section
+              className="review-queue__section"
+              aria-label="Non-flagged transactions"
+            >
+              <h2 className="review-queue__section-title">
+                Non-flagged transactions
+              </h2>
+              <div className="review-queue__list">
+                {otherTransactions.map((transaction) => (
+                  <CollapsedEntry
+                    key={transaction.transaction_id}
+                    transaction={transaction}
+                    badge="Not flagged"
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+        </>
+      )}
+    </section>
   )
 }
 
