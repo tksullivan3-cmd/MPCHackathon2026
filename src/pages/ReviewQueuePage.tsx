@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import './FlagDetailsPage.css'
+import './ReviewQueuePage.css'
 
 type Transaction = {
   transaction_id: string
@@ -107,7 +107,7 @@ function CollapsedEntry({
   )
 }
 
-function FlagDetailsPage() {
+function ReviewQueuePage() {
   const [data, setData] = useState<Transaction[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -308,4 +308,4 @@ function FlagDetailsPage() {
   )
 }
 
-export default FlagDetailsPage
+export default ReviewQueuePage

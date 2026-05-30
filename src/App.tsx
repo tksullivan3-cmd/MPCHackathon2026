@@ -1,5 +1,5 @@
 import { NavLink, Route, Routes } from 'react-router-dom'
-import FlagDetailsPage from './pages/FlagDetailsPage'
+import ReviewQueuePage from './pages/ReviewQueuePage'
 import OverviewPage from './pages/OverviewPage'
 import UploadCsvPage from './pages/UploadCsvPage'
 import './App.css'
@@ -10,7 +10,7 @@ function App() {
       <nav className="nav">
         <NavLink to="/upload">Upload .csv</NavLink>
         <NavLink to="/overview">Overview page</NavLink>
-        <NavLink to="/flag-details">Flag details page</NavLink>
+        <NavLink to="/review-queue">Review queue</NavLink>
       </nav>
 
       <main className="main">
@@ -18,7 +18,7 @@ function App() {
           <Route path="/" element={<UploadCsvPage />} />
           <Route path="/upload" element={<UploadCsvPage />} />
           <Route path="/overview" element={<OverviewPage />} />
-          <Route path="/flag-details" element={<FlagDetailsPage />} />
+          <Route path="/review-queue" element={<ReviewQueuePage />} />
         </Routes>
       </main>
     </>
