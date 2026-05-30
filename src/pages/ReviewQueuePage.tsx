@@ -149,7 +149,8 @@ function ReviewQueuePage() {
     [data],
   )
 
-  const queueComplete = flaggedQueue.length > 0 && activeIndex >= flaggedQueue.length
+  const queueComplete =
+    flaggedQueue.length > 0 && activeIndex >= flaggedQueue.length
 
   function handleReviewAction() {
     setActiveIndex((current) => current + 1)
