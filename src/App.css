@@ -18,3 +18,72 @@
 .main {
   padding: 1.5rem;
 }
+
+.upload-page__intro {
+  max-width: 36rem;
+  margin: 0 auto 2rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.upload-page__controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.upload-page__file-label {
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.upload-page__file-input {
+  font: inherit;
+}
+
+.upload-page__file-name {
+  font-size: 0.95rem;
+  color: var(--text-h);
+}
+
+.upload-page__error {
+  max-width: 24rem;
+  font-size: 0.95rem;
+  color: #b91c1c;
+}
+
+@media (prefers-color-scheme: dark) {
+  .upload-page__error {
+    color: #f87171;
+  }
+}
+
+.upload-page__submit {
+  font: inherit;
+  font-weight: 500;
+  color: var(--bg);
+  background: var(--accent);
+  border: 1px solid var(--accent-border);
+  border-radius: 6px;
+  padding: 0.6rem 1.25rem;
+  cursor: pointer;
+}
+
+.upload-page__submit:hover {
+  filter: brightness(1.05);
+}
+
+.upload-page__submit:focus-visible {
+  outline: 2px solid var(--accent-border);
+  outline-offset: 2px;
+}
+
+.upload-page__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.upload-page__submit:disabled:hover {
+  filter: none;
+}
