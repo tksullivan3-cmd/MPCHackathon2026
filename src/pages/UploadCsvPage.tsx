@@ -70,7 +70,6 @@ function UploadCsvPage({
     <main className="upload-page">
       <section className="upload-card">
         <div className="upload-copy">
-          <p className="eyebrow">Fraud Detection Tool</p>
           <h1>Upload Transaction Data</h1>
           <p className="hero-text">
             Load the provided <strong>transactions.csv</strong> file to run the
