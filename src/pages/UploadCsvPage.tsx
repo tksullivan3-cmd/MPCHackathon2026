@@ -1,44 +1,25 @@
 import { useState } from 'react'
 import './UploadCsvPage.css'
 
-const CSV_MIME_TYPES = new Set([
-  'text/csv',
-  'application/csv',
-  'application/vnd.ms-excel',
-  'text/plain',
-])
-
 function isCsvFile(file: File): boolean {
-  const name = file.name.toLowerCase()
-
-  if (!name.endsWith('.csv')) {
-    return false
-  }
-
-  const type = file.type.toLowerCase()
-
-  if (!type) {
-    return true
-  }
-
-  return CSV_MIME_TYPES.has(type)
+  return file.name.toLowerCase().endsWith('.csv')
 }
 
-function UploadCsvPage() {
+function UploadCsvPage({
+  setAnalysisResult,
+}: {
+  setAnalysisResult: (data: any) => void
+}) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [fileError, setFileError] = useState<string | null>(null)
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const [analysisResult, setAnalysisResult] = useState<any>(null)
+  const [localAnalysisResult, setLocalAnalysisResult] = useState<any>(null)
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0] ?? null
 
-    if (!file) {
-      setSelectedFile(null)
-      setFileError(null)
-      return
-    }
+    if (!file) return
 
     if (!isCsvFile(file)) {
       setSelectedFile(null)
@@ -49,7 +30,7 @@ function UploadCsvPage() {
     setSelectedFile(file)
     setFileError(null)
     setUploadError(null)
-    setAnalysisResult(null)
+    setLocalAnalysisResult(null)
   }
 
   async function handleUploadClick() {
@@ -77,6 +58,7 @@ function UploadCsvPage() {
       }
 
       setAnalysisResult(data)
+      setLocalAnalysisResult(data)
     } catch (error: any) {
       setUploadError(error.message || 'Failed to analyze CSV.')
     } finally {
@@ -88,12 +70,12 @@ function UploadCsvPage() {
     <main className="upload-page">
       <section className="upload-card">
         <div className="upload-copy">
-          <p className="eyebrow">MCP Hacks Fraud Detection Tool</p>
+          <p className="eyebrow">Fraud Detection Tool</p>
           <h1>Upload Transaction Data</h1>
           <p className="hero-text">
             Load the provided <strong>transactions.csv</strong> file to run the
-            fraud detection engine. After the analysis completes, use the
-            Overview and Flag Details pages to inspect the results.
+            fraud detection engine. After analysis, use the Overview and Review
+            Queue pages to inspect the results.
           </p>
         </div>
 
@@ -121,38 +103,14 @@ function UploadCsvPage() {
         </div>
       </section>
 
-      {analysisResult && (
+      {localAnalysisResult && (
         <section className="success-card">
-          <div>
-            <p className="success-label">Analysis Complete</p>
-            <h2>{analysisResult.total_transactions} transactions processed</h2>
-            <p>
-              The detector flagged{' '}
-              <strong>{analysisResult.flagged_transactions}</strong> suspicious
-              transactions for further review.
-            </p>
-          </div>
-
-          <div className="success-stats">
-            <div>
-              <strong>{analysisResult.high_risk_count}</strong>
-              <span>High Risk</span>
-            </div>
-
-            <div>
-              <strong>{analysisResult.medium_risk_count}</strong>
-              <span>Medium Risk</span>
-            </div>
-
-            <div>
-              <strong>{analysisResult.low_risk_count}</strong>
-              <span>Low Risk</span>
-            </div>
-          </div>
-
-          <p className="next-step">
-            Next: open the Overview page for charts, then Flag Details to review
-            individual suspicious transactions.
+          <p className="success-label">Analysis Complete</p>
+          <h2>{localAnalysisResult.total_transactions} transactions processed</h2>
+          <p>
+            The detector flagged{' '}
+            <strong>{localAnalysisResult.flagged_transactions}</strong>{' '}
+            suspicious transactions for review.
           </p>
         </section>
       )}
