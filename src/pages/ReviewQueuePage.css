@@ -48,7 +48,7 @@
 }
 
 .review-card--active {
-  border-color: var(--accent-border);
+  border-color: var(--text-h);
   box-shadow: var(--shadow);
 }
 
@@ -92,8 +92,9 @@
   font-weight: 600;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
-  background: var(--accent-bg);
-  border: 1px solid var(--accent-border);
+  color: var(--text-h);
+  background: transparent;
+  border: 2px solid var(--text-h);
 }
 
 .review-card__body {
@@ -104,8 +105,8 @@
   margin: 0 0 1.25rem;
   padding: 0.85rem 1rem;
   border-radius: 6px;
-  background: var(--accent-bg);
-  border: 1px solid var(--accent-border);
+  background: transparent;
+  border: 2px solid var(--text-h);
   color: var(--text-h);
   line-height: 1.45;
   overflow-wrap: anywhere;
@@ -151,19 +152,20 @@
   border-radius: 4px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #111;
+  background: transparent;
+  border: 2px solid currentColor;
 }
 
 .review-card__risk--high {
-  background: #ff4d4d;
+  color: var(--flag-red);
 }
 
 .review-card__risk--medium {
-  background: #ffd11a;
+  color: var(--flag-yellow);
 }
 
 .review-card__risk--low {
-  background: #66cc66;
+  color: var(--text-h);
 }
 
 .review-card__actions {
@@ -178,51 +180,36 @@
   border-radius: 6px;
   padding: 0.55rem 1rem;
   cursor: pointer;
-  border: 1px solid var(--border);
-}
-
-.review-card__action--approve {
-  color: var(--bg);
-  background: #16a34a;
-  border-color: #15803d;
-}
-
-.review-card__action--dismiss {
   color: var(--text-h);
-  background: var(--bg);
+  background: transparent;
+  border: 2px solid var(--text-h);
 }
 
-.review-card__action--escalate {
-  color: var(--bg);
-  background: var(--accent);
-  border-color: var(--accent-border);
-}
-
-.review-card__action:hover {
-  filter: brightness(1.05);
+.review-card__action:hover:not(:disabled) {
+  opacity: 0.82;
 }
 
 .review-card__action:focus-visible {
-  outline: 2px solid var(--accent-border);
+  outline: 2px solid var(--text-h);
   outline-offset: 2px;
+}
+
+.review-card__action:disabled {
+  color: var(--disabled);
+  border-color: var(--disabled);
+  cursor: not-allowed;
 }
 
 .review-queue__complete {
   padding: 1rem 1.25rem;
   border-radius: 8px;
-  border: 1px solid var(--accent-border);
-  background: var(--accent-bg);
+  border: 2px solid var(--text-h);
+  background: transparent;
   color: var(--text-h);
 }
 
 .review-queue__error {
-  color: #b91c1c;
-}
-
-@media (prefers-color-scheme: dark) {
-  .review-queue__error {
-    color: #f87171;
-  }
+  color: var(--error);
 }
 
 @media (max-width: 768px) {

@@ -32,9 +32,9 @@
 
 .overview-card {
   padding: 1rem 1.1rem;
-  border: 1px solid var(--border);
+  border: 2px solid var(--text-h);
   border-radius: 8px;
-  background: var(--accent-bg);
+  background: transparent;
 }
 
 .overview-card__label {
@@ -257,9 +257,9 @@
   border-radius: 4px;
   font-weight: 600;
   font-size: 0.85rem;
-  color: var(--text-h);
-  background: var(--accent-bg);
-  border: 1px solid var(--accent-border);
+  color: var(--flag-red);
+  background: transparent;
+  border: 2px solid var(--flag-red);
 }
 
 .overview-actions {
@@ -272,21 +272,26 @@
   font: inherit;
   font-weight: 500;
   color: var(--text-h);
-  background: var(--bg);
-  border: 1px solid var(--border);
+  background: transparent;
+  border: 2px solid var(--text-h);
   border-radius: 6px;
   padding: 0.55rem 1rem;
   cursor: pointer;
 }
 
-.overview-actions__btn:hover {
-  border-color: var(--accent-border);
-  background: var(--accent-bg);
+.overview-actions__btn:hover:not(:disabled) {
+  opacity: 0.82;
 }
 
 .overview-actions__btn:focus-visible {
-  outline: 2px solid var(--accent-border);
+  outline: 2px solid var(--text-h);
   outline-offset: 2px;
+}
+
+.overview-actions__btn:disabled {
+  color: var(--disabled);
+  border-color: var(--disabled);
+  cursor: not-allowed;
 }
 
 @media (max-width: 640px) {
