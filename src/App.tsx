@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
-import ThemeToggle from './components/ThemeToggle'
 import ReviewQueuePage from './pages/ReviewQueuePage'
 import OverviewPage from './pages/OverviewPage'
 import UploadCsvPage from './pages/UploadCsvPage'
@@ -11,20 +10,10 @@ function App() {
 
   return (
     <>
-      <ThemeToggle />
-
       <nav className="nav">
-<<<<<<< HEAD
-        <div className="nav__links">
-          <NavLink to="/upload">Upload </NavLink>
-          <NavLink to="/overview">Overview </NavLink>
-          <NavLink to="/review-queue">Review Queue</NavLink>
-        </div>
-=======
         <NavLink to="/upload">Upload</NavLink>
         <NavLink to="/overview">Overview</NavLink>
         <NavLink to="/review-queue">Review Queue</NavLink>
->>>>>>> 323c4e0 (Connecting API)
       </nav>
 
       <main className="main">
