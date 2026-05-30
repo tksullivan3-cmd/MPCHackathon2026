@@ -8,9 +8,9 @@ function App() {
   return (
     <>
       <nav className="nav">
-        <NavLink to="/upload">Upload .csv</NavLink>
-        <NavLink to="/overview">Overview page</NavLink>
-        <NavLink to="/review-queue">Review queue</NavLink>
+        <NavLink to="/upload">Upload </NavLink>
+        <NavLink to="/overview">Overview </NavLink>
+        <NavLink to="/review-queue">Review Queue</NavLink>
       </nav>
 
       <main className="main">
