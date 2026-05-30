@@ -13,11 +13,18 @@ function App() {
     <>
       <ThemeToggle />
 
-      <nav className="nav">
-        <NavLink to="/upload">Upload</NavLink>
-        <NavLink to="/overview">Overview</NavLink>
-        <NavLink to="/review-queue">Review Queue</NavLink>
-      </nav>
+      <header className="app-header">
+        <div className="app-header__brand">
+          <span className="app-header__icon">🛡️</span>
+          <span className="app-header__title">Fraud Detection Tool</span>
+        </div>
+
+        <nav className="nav">
+          <NavLink to="/upload">Upload</NavLink>
+          <NavLink to="/overview">Overview</NavLink>
+          <NavLink to="/review-queue">Review Queue</NavLink>
+        </nav>
+      </header>
 
       <main className="main">
         <Routes>
