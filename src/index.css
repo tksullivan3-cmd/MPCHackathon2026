@@ -2,27 +2,47 @@
 [data-theme='light'] {
   color-scheme: light;
 
-  --bg: #dceeff;
+  --blue-950: #061b3a;
+  --blue-900: #0b2d66;
+  --blue-700: #0057d9;
+  --blue-400: #65b7ff;
+  --blue-200: #c9e4ff;
+  --blue-100: #dceeff;
+  --blue-50: #eaf6ff;
+
+  --bg: var(--blue-100);
   --text: #223044;
-  --text-h: #172033;
-  --accent: #0057d9;
-  --surface: rgba(255, 255, 255, 0.72);
-  --surface-muted: #eaf6ff;
-  --border: rgba(14, 46, 92, 0.22);
+  --text-h: var(--blue-950);
+  --accent: var(--blue-700);
+  --accent-light: var(--blue-400);
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-muted: var(--blue-50);
+  --border: rgba(11, 45, 102, 0.22);
   --code-bg: rgba(0, 87, 217, 0.08);
-  --accent-bg: transparent;
-  --accent-border: #323232;
+  --accent-bg: rgba(0, 87, 217, 0.08);
+  --accent-border: var(--blue-700);
+  --header-gradient: linear-gradient(
+    135deg,
+    var(--blue-950) 0%,
+    var(--blue-900) 45%,
+    var(--blue-700) 100%
+  );
+  --page-gradient:
+    radial-gradient(circle at 15% 20%, rgba(0, 111, 255, 0.18), transparent 28%),
+    radial-gradient(circle at 85% 15%, rgba(0, 70, 180, 0.16), transparent 30%),
+    linear-gradient(135deg, var(--blue-50) 0%, #d9edff 45%, var(--blue-200) 100%);
   --flag-yellow: #e28e19;
   --flag-red: #bd3636;
   --disabled: #9ca3af;
-  --error: #bd3636;
-  --success: #323232;
+  --error: var(--flag-red);
+  --success: var(--blue-700);
+  --chart-header: var(--text-h);
   --shadow:
-    rgba(50, 50, 50, 0.12) 0 10px 15px -3px,
-    rgba(50, 50, 50, 0.08) 0 4px 6px -2px;
+    rgba(4, 26, 62, 0.12) 0 10px 15px -3px,
+    rgba(4, 26, 62, 0.08) 0 4px 6px -2px;
   --card-shadow:
-    rgba(50, 50, 50, 0.1) 0 12px 30px,
-    rgba(50, 50, 50, 0.06) 0 4px 10px;
+    rgba(4, 26, 62, 0.1) 0 12px 30px,
+    rgba(4, 26, 62, 0.06) 0 4px 10px;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -45,21 +65,33 @@
 [data-theme='dark'] {
   color-scheme: dark;
 
-  --bg: #08291d;
-  --text: #b5ff96;
-  --text-h: #b5ff96;
-  --accent: #b5ff96;
-  --surface: rgba(181, 255, 150, 0.08);
-  --surface-muted: #08291d;
-  --border: rgba(181, 255, 150, 0.35);
-  --code-bg: rgba(181, 255, 150, 0.1);
-  --accent-bg: transparent;
-  --accent-border: #b5ff96;
+  --bg: #041528;
+  --text: #b8d9ff;
+  --text-h: #dbeafe;
+  --accent: var(--blue-400);
+  --accent-light: #93c5fd;
+  --surface: rgba(11, 45, 102, 0.72);
+  --surface-muted: #061b3a;
+  --border: rgba(101, 183, 255, 0.28);
+  --code-bg: rgba(101, 183, 255, 0.1);
+  --accent-bg: rgba(101, 183, 255, 0.12);
+  --accent-border: var(--blue-400);
+  --header-gradient: linear-gradient(
+    135deg,
+    #020b18 0%,
+    var(--blue-950) 45%,
+    var(--blue-900) 100%
+  );
+  --page-gradient:
+    radial-gradient(circle at 15% 20%, rgba(0, 87, 217, 0.22), transparent 28%),
+    radial-gradient(circle at 85% 15%, rgba(11, 45, 102, 0.35), transparent 30%),
+    linear-gradient(135deg, #041528 0%, var(--blue-950) 45%, #0a2240 100%);
   --flag-yellow: #e28e19;
   --flag-red: #bd3636;
-  --disabled: #808080;
-  --error: #bd3636;
-  --success: #b5ff96;
+  --disabled: #64748b;
+  --error: var(--flag-red);
+  --success: var(--blue-400);
+  --chart-header: var(--accent-light);
   --shadow:
     rgba(0, 0, 0, 0.35) 0 10px 15px -3px,
     rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
@@ -78,15 +110,12 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(0, 111, 255, 0.18), transparent 28%),
-    radial-gradient(circle at 85% 15%, rgba(0, 70, 180, 0.16), transparent 30%),
-    linear-gradient(135deg, #eaf6ff 0%, #d9edff 45%, #c9e4ff 100%);
+  background: var(--page-gradient);
 }
 
 body {
   margin: 0;
-  background: #dceeff;
+  background: var(--bg);
 }
 
 h1,
@@ -135,21 +164,21 @@ code {
 
 .btn {
   font: inherit;
-  font-weight: 500;
-  color: var(--text-h);
+  font-weight: 600;
+  color: var(--accent);
   background: transparent;
-  border: 2px solid var(--text-h);
+  border: 2px solid var(--accent);
   border-radius: 6px;
   padding: 0.55rem 1rem;
   cursor: pointer;
 }
 
 .btn:hover:not(:disabled) {
-  opacity: 0.82;
+  opacity: 0.85;
 }
 
 .btn:focus-visible {
-  outline: 2px solid var(--text-h);
+  outline: 2px solid var(--accent-light);
   outline-offset: 2px;
 }
 
