@@ -389,7 +389,7 @@ function ReviewQueuePage({
           <input
             id="search-filter"
             type="text"
-            placeholder="Search merchant, transaction ID, amount, reason..."
+            placeholder="Search transactions / merchants"
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
           />
