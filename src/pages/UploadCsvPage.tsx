@@ -115,11 +115,43 @@ function UploadCsvPage({
       {localAnalysisResult && (
         <section className="success-card">
           <p className="success-label">Analysis Complete</p>
+
           <h2>{localAnalysisResult.total_transactions} transactions processed</h2>
+
           <p>
             The detector flagged{' '}
             <strong>{localAnalysisResult.flagged_transactions}</strong>{' '}
             suspicious transactions for review.
+          </p>
+
+          <div className="success-stats">
+            <div>
+              <strong>{localAnalysisResult.high_risk_count}</strong>
+              <span>High Risk</span>
+            </div>
+
+            <div>
+              <strong>{localAnalysisResult.medium_risk_count}</strong>
+              <span>Medium Risk</span>
+            </div>
+
+            <div>
+              <strong>{localAnalysisResult.low_risk_count}</strong>
+              <span>Low Risk</span>
+            </div>
+          </div>
+
+          <a
+            className="download-csv-button"
+            href="http://127.0.0.1:8000/download-flagged-csv"
+            download
+          >
+            Download updated flagged CSV
+          </a>
+
+          <p className="next-step">
+            Next: open the Overview page for charts, then Review Queue to review
+            individual suspicious transactions.
           </p>
         </section>
       )}

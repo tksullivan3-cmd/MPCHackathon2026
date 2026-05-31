@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pathlib import Path
 import shutil
 
@@ -10,9 +11,9 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-],
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -38,7 +39,7 @@ REQUIRED_COLUMNS = {
 
 @app.post("/detect-fraud")
 async def detect_fraud_endpoint(file: UploadFile = File(...)):
-    if not file.filename.endswith(".csv"):
+    if not file.filename or not file.filename.endswith(".csv"):
         raise HTTPException(status_code=400, detail="Only CSV files are accepted.")
 
     input_path = DATA_DIR / "transactions.csv"
@@ -65,3 +66,20 @@ async def detect_fraud_endpoint(file: UploadFile = File(...)):
         "low_risk_count": int((df["risk_level"] == "low").sum()),
         "transactions": transactions,
     }
+
+
+@app.get("/download-flagged-csv")
+async def download_flagged_csv():
+    output_path = DATA_DIR / "transactions_flagged.csv"
+
+    if not output_path.exists():
+        raise HTTPException(
+            status_code=404,
+            detail="No flagged CSV file found. Please upload and analyze a CSV first.",
+        )
+
+    return FileResponse(
+        path=output_path,
+        filename="transactions_flagged.csv",
+        media_type="text/csv",
+    )
