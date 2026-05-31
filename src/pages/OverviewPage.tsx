@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import './OverviewPage.css'
 
 function formatLabel(label: string): string {
@@ -11,13 +12,22 @@ function formatLabel(label: string): string {
 function OverviewPage({ analysisResult }: { analysisResult: any }) {
   if (!analysisResult) {
     return (
-      <section className="overview-page">
-        <header className="overview-page__header">
-          <h1>Overview</h1>
-          <p className="overview-page__subtitle">
-            Upload and analyze transactions first.
+      <section className="overview-page overview-page--empty">
+        <div className="overview-page__empty">
+          <h1 className="overview-page__empty-title">Upload the dataset first</h1>
+          <p className="overview-page__empty-text">
+            Import and analyze a CSV on the Upload page to see summary metrics,
+            charts, and recent alerts here.
           </p>
-        </header>
+          <img
+            className="overview-page__empty-art"
+            src="/images/review_bargraph_holder.png"
+            alt="Overview charts placeholder"
+          />
+          <Link className="overview-page__empty-link" to="/upload">
+            Go to Upload
+          </Link>
+        </div>
       </section>
     )
   }

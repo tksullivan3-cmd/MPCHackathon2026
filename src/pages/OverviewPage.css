@@ -3,6 +3,75 @@
   max-width: 100%;
 }
 
+.overview-page--empty {
+  text-align: center;
+}
+
+.overview-page__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  width: min(100%, 42rem);
+  margin: 2rem auto 3rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
+}
+
+.overview-page__empty-art {
+  display: block;
+  width: min(100%, 28rem);
+  max-height: 20rem;
+  height: auto;
+  object-fit: contain;
+  margin-top: 0.5rem;
+}
+
+.overview-page__empty-title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text-h);
+  font-weight: 700;
+}
+
+.overview-page__empty-text {
+  margin: 0;
+  max-width: 28rem;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.overview-page__empty-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  background: transparent;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+}
+
+.overview-page__empty-link:hover {
+  opacity: 0.85;
+}
+
+.overview-page__empty-link:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+
 .overview-page__header h1 {
   margin-top: 0;
   margin-bottom: 1.5rem;
