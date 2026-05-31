@@ -282,7 +282,14 @@ def detect_fraud(csv_path, output_path="transactions_flagged.csv"):
     df["flag_reasons"] = all_reasons
 
     df["risk_level"] = df["fraud_score"].apply(assign_risk_level)
-    df["is_flagged"] = df["fraud_score"] >= 50
+
+    # Flag top 7% of transactions
+    num_to_flag = max(1, int(len(df) * 0.07))
+
+    df["is_flagged"] = False
+
+    top_idx = df.nlargest(num_to_flag, "fraud_score").index
+    df.loc[top_idx, "is_flagged"] = True
 
     df.to_csv(output_path, index=False)
 
