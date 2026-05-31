@@ -1,6 +1,13 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './ReviewQueuePage.css'
+
+type ReviewAction = 'approve' | 'dismiss' | 'escalate'
+
+type ReviewHistoryEntry = {
+  index: number
+  action: ReviewAction
+}
 
 type Transaction = {
   transaction_id: string
@@ -24,6 +31,12 @@ function getRiskLabel(score: number): string {
   if (score >= 80) return 'High risk'
   if (score >= 50) return 'Medium risk'
   return 'Low risk'
+}
+
+function getActionBadge(action: ReviewAction): string {
+  if (action === 'approve') return 'Approved'
+  if (action === 'dismiss') return 'Dismissed'
+  return 'Escalated'
 }
 
 function CollapsedEntry({
@@ -51,6 +64,7 @@ function CollapsedEntry({
 
 function ReviewQueuePage({ analysisResult }: { analysisResult: any }) {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [reviewHistory, setReviewHistory] = useState<ReviewHistoryEntry[]>([])
 
   const flaggedQueue = useMemo(
     () =>
@@ -60,10 +74,34 @@ function ReviewQueuePage({ analysisResult }: { analysisResult: any }) {
     [analysisResult],
   )
 
-  const queueComplete = flaggedQueue.length > 0 && activeIndex >= flaggedQueue.length
+  const decisionsByIndex = useMemo(() => {
+    const map = new Map<number, ReviewAction>()
+    for (const entry of reviewHistory) {
+      map.set(entry.index, entry.action)
+    }
+    return map
+  }, [reviewHistory])
 
-  function handleReviewAction() {
+  const queueComplete = flaggedQueue.length > 0 && activeIndex >= flaggedQueue.length
+  const canUndo = reviewHistory.length > 0
+  const lastDecision = reviewHistory[reviewHistory.length - 1]
+
+  useEffect(() => {
+    setActiveIndex(0)
+    setReviewHistory([])
+  }, [analysisResult])
+
+  function handleReviewAction(action: ReviewAction) {
+    setReviewHistory((current) => [...current, { index: activeIndex, action }])
     setActiveIndex((current) => current + 1)
+  }
+
+  function handleUndo() {
+    if (reviewHistory.length === 0) return
+
+    const previous = reviewHistory[reviewHistory.length - 1]
+    setReviewHistory((current) => current.slice(0, -1))
+    setActiveIndex(previous.index)
   }
 
   if (!analysisResult) {
@@ -107,6 +145,23 @@ function ReviewQueuePage({ analysisResult }: { analysisResult: any }) {
             </p>
           )}
 
+          {canUndo && lastDecision && (
+            <div className="review-queue__undo">
+              <button
+                type="button"
+                className="review-queue__undo-btn"
+                onClick={handleUndo}
+              >
+                Undo {getActionBadge(lastDecision.action).toLowerCase()}
+              </button>
+              <span className="review-queue__undo-hint">
+                Return to{' '}
+                {flaggedQueue[lastDecision.index]?.transaction_id ?? 'previous'}{' '}
+                transaction
+              </span>
+            </div>
+          )}
+
           {queueComplete && (
             <p className="review-queue__complete" role="status">
               Review queue complete. All flagged entries have been reviewed.
@@ -119,11 +174,12 @@ function ReviewQueuePage({ analysisResult }: { analysisResult: any }) {
             <div className="review-queue__list">
               {flaggedQueue.map((transaction: Transaction, index: number) => {
                 if (index < activeIndex) {
+                  const action = decisionsByIndex.get(index)
                   return (
                     <CollapsedEntry
                       key={transaction.transaction_id}
                       transaction={transaction}
-                      badge="Reviewed"
+                      badge={action ? getActionBadge(action) : 'Reviewed'}
                       reviewed
                     />
                   )
@@ -175,21 +231,21 @@ function ReviewQueuePage({ analysisResult }: { analysisResult: any }) {
                           <button
                             type="button"
                             className="review-card__action review-card__action--approve"
-                            onClick={handleReviewAction}
+                            onClick={() => handleReviewAction('approve')}
                           >
                             Approve
                           </button>
                           <button
                             type="button"
                             className="review-card__action review-card__action--dismiss"
-                            onClick={handleReviewAction}
+                            onClick={() => handleReviewAction('dismiss')}
                           >
                             Dismiss
                           </button>
                           <button
                             type="button"
                             className="review-card__action review-card__action--escalate"
-                            onClick={handleReviewAction}
+                            onClick={() => handleReviewAction('escalate')}
                           >
                             Escalate
                           </button>

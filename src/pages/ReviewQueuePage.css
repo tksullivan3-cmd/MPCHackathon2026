@@ -91,6 +91,40 @@
   color: var(--text-h);
 }
 
+.review-queue__undo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin: 0 0 1.25rem;
+}
+
+.review-queue__undo-btn {
+  font: inherit;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: var(--text-h);
+  background: var(--surface);
+  border: 2px solid var(--border);
+}
+
+.review-queue__undo-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.review-queue__undo-btn:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+
+.review-queue__undo-hint {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
 .review-queue__section + .review-queue__section {
   margin-top: 2rem;
 }
