@@ -22,3 +22,21 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Python / FastAPI backend
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Environment variables / secrets
+.env
+.env.local
+.env.*.local
+
+# Uploaded/generated CSV data
+backend/data/
+data/
