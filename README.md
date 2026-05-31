@@ -2,6 +2,11 @@
 
 A full-stack fraud detection tool built for the MPC Hackathon 2026. Upload transaction CSV data, run a rule-based scoring engine, explore results on a dashboard, and work through flagged transactions in a reviewer queue—with session learning that adjusts thresholds when analysts dismiss false positives.
 
+## Documentation
+
+- [Product Requirements Document (PRD)](docs/PRD.md)
+- [Implementation Plan](docs/IMPLEMENTATION_PLAN.md)
+
 ## Overview
 
 **Fraud Hunter** helps teams analyze card transaction data and surface suspicious activity for human review. The app combines a **React + TypeScript** frontend with a **Python FastAPI** backend that scores every transaction, assigns risk levels, and flags the highest-risk subset for investigation.
