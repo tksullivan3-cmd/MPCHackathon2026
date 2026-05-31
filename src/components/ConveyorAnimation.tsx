@@ -17,14 +17,17 @@ function buildConveyorItems(): ConveyorItem[] {
   }))
 }
 
-function ConveyorAnimation() {
+function ConveyorAnimation({ wide = false }: { wide?: boolean }) {
   const loopItems = useMemo(() => {
     const items = buildConveyorItems()
     return [...items, ...items]
   }, [])
 
   return (
-    <section className="conveyor" aria-hidden="true">
+    <section
+      className={`conveyor${wide ? ' conveyor--wide' : ''}`}
+      aria-hidden="true"
+    >
       <p className="conveyor__label">Transactions scanned for fraud in real time</p>
 
       <div className="conveyor__viewport">

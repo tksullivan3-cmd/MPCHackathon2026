@@ -93,7 +93,7 @@ function UploadCsvPage({
             onChange={handleFileChange}
           />
 
-          <ConveyorAnimation />
+          <ConveyorAnimation key="upload-box-conveyor" />
 
           {selectedFile && <p className="file-name">{selectedFile.name}</p>}
           {fileError && <p className="error">{fileError}</p>}
@@ -104,6 +104,13 @@ function UploadCsvPage({
           </button>
         </div>
       </section>
+
+      {(isLoading || localAnalysisResult) && (
+        <ConveyorAnimation
+          wide
+          key={`analysis-conveyor-${selectedFile?.name ?? 'conveyor'}`}
+        />
+      )}
 
       {localAnalysisResult && (
         <section className="success-card">
