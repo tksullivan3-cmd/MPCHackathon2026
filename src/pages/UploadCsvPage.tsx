@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import ConveyorAnimation from '../components/ConveyorAnimation'
 import './UploadCsvPage.css'
 
 function isCsvFile(file: File): boolean {
@@ -91,6 +92,8 @@ function UploadCsvPage({
             accept=".csv,text/csv"
             onChange={handleFileChange}
           />
+
+          <ConveyorAnimation />
 
           {selectedFile && <p className="file-name">{selectedFile.name}</p>}
           {fileError && <p className="error">{fileError}</p>}
