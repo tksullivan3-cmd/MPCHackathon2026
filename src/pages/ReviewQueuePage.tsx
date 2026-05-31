@@ -1,24 +1,26 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import {
+  applySessionLearningToAnalysis,
+  getLearningSummary,
+  type SessionLearningState,
+  type TransactionRow,
+} from '../lib/sessionLearning'
 import './ReviewQueuePage.css'
 
 type ReviewAction = 'approve' | 'dismiss' | 'escalate'
 
 type ReviewHistoryEntry = {
-  index: number
+  transactionId: string
   action: ReviewAction
+  ruleId?: string
+  autoSuppressedIds?: string[]
 }
 
-type Transaction = {
-  transaction_id: string
+type Transaction = TransactionRow & {
   timestamp: string
-  card_id: string
   amount: number
-  merchant_name: string
-  fraud_score: number
   risk_level: string
-  flag_reasons: string
-  is_flagged: boolean
 }
 
 function getRiskClass(score: number): string {
@@ -43,13 +45,19 @@ function CollapsedEntry({
   transaction,
   badge,
   reviewed = false,
+  suppressed = false,
 }: {
   transaction: Transaction
   badge: string
   reviewed?: boolean
+  suppressed?: boolean
 }) {
   return (
-    <article className={`review-card${reviewed ? ' review-card--reviewed' : ''}`}>
+    <article
+      className={`review-card${reviewed ? ' review-card--reviewed' : ''}${
+        suppressed ? ' review-card--suppressed' : ''
+      }`}
+    >
       <div className="review-card__summary">
         <span className="review-card__summary-text">
           <span>{transaction.transaction_id}</span>
@@ -62,46 +70,138 @@ function CollapsedEntry({
   )
 }
 
-function ReviewQueuePage({ analysisResult }: { analysisResult: any }) {
-  const [activeIndex, setActiveIndex] = useState(0)
+function ReviewQueuePage({
+  analysisResult,
+  sessionLearning,
+  onLearnFromDismiss,
+  onRevertDismissLearning,
+}: {
+  analysisResult: any
+  sessionLearning: SessionLearningState
+  onLearnFromDismiss: (
+    transaction: TransactionRow,
+    pendingAfterDismiss: TransactionRow[],
+  ) => { ruleId: string; autoSuppressedIds: string[] }
+  onRevertDismissLearning: (
+    ruleId: string,
+    dismissedTransactionId: string,
+    autoSuppressedIds: string[],
+  ) => void
+}) {
   const [reviewHistory, setReviewHistory] = useState<ReviewHistoryEntry[]>([])
+  const [learningNotice, setLearningNotice] = useState<string | null>(null)
+
+  const adjustedAnalysis = useMemo(() => {
+    if (!analysisResult) return null
+    return applySessionLearningToAnalysis(analysisResult, sessionLearning)
+  }, [analysisResult, sessionLearning])
 
   const flaggedQueue = useMemo(
     () =>
-      (analysisResult?.transactions ?? [])
-        .filter((row: Transaction) => row.is_flagged !== false)
-        .sort((a: Transaction, b: Transaction) => b.fraud_score - a.fraud_score),
-    [analysisResult],
+      [...(adjustedAnalysis?.transactions ?? [])].sort(
+        (a, b) => Number(b.fraud_score) - Number(a.fraud_score),
+      ) as Transaction[],
+    [adjustedAnalysis],
   )
 
-  const decisionsByIndex = useMemo(() => {
-    const map = new Map<number, ReviewAction>()
+  const reviewedIds = useMemo(
+    () => new Set(reviewHistory.map((entry) => entry.transactionId)),
+    [reviewHistory],
+  )
+
+  const decisionsByTransactionId = useMemo(() => {
+    const map = new Map<string, ReviewAction>()
     for (const entry of reviewHistory) {
-      map.set(entry.index, entry.action)
+      map.set(entry.transactionId, entry.action)
     }
     return map
   }, [reviewHistory])
 
-  const queueComplete = flaggedQueue.length > 0 && activeIndex >= flaggedQueue.length
+  const currentTransaction = flaggedQueue.find(
+    (transaction) => !reviewedIds.has(transaction.transaction_id),
+  )
+
+  const reviewedCount = reviewHistory.length
+  const queueComplete =
+    flaggedQueue.length > 0 && reviewedCount >= flaggedQueue.length
+
   const canUndo = reviewHistory.length > 0
   const lastDecision = reviewHistory[reviewHistory.length - 1]
+  const learningSummary = getLearningSummary(sessionLearning)
 
   useEffect(() => {
-    setActiveIndex(0)
     setReviewHistory([])
+    setLearningNotice(null)
   }, [analysisResult])
 
+  useEffect(() => {
+    if (!learningNotice) return
+    const timer = window.setTimeout(() => setLearningNotice(null), 5000)
+    return () => window.clearTimeout(timer)
+  }, [learningNotice])
+
   function handleReviewAction(action: ReviewAction) {
-    setReviewHistory((current) => [...current, { index: activeIndex, action }])
-    setActiveIndex((current) => current + 1)
+    if (!currentTransaction) return
+
+    let ruleId: string | undefined
+    let autoSuppressedIds: string[] = []
+
+    if (action === 'dismiss') {
+      const pendingAfterDismiss = flaggedQueue.filter(
+        (transaction) =>
+          transaction.transaction_id !== currentTransaction.transaction_id &&
+          !reviewedIds.has(transaction.transaction_id),
+      )
+
+      const learningResult = onLearnFromDismiss(
+        currentTransaction,
+        pendingAfterDismiss,
+      )
+
+      ruleId = learningResult.ruleId
+      autoSuppressedIds = learningResult.autoSuppressedIds
+
+      if (autoSuppressedIds.length > 0) {
+        setLearningNotice(
+          `Learned from dismissal — ${autoSuppressedIds.length} similar flag${autoSuppressedIds.length === 1 ? '' : 's'} suppressed this session.`,
+        )
+      } else {
+        setLearningNotice(
+          'Learned from dismissal — thresholds adjusted for similar transactions this session.',
+        )
+      }
+    }
+
+    setReviewHistory((current) => [
+      ...current,
+      {
+        transactionId: currentTransaction.transaction_id,
+        action,
+        ruleId,
+        autoSuppressedIds,
+      },
+    ])
   }
 
   function handleUndo() {
     if (reviewHistory.length === 0) return
 
     const previous = reviewHistory[reviewHistory.length - 1]
+
+    if (
+      previous.action === 'dismiss' &&
+      previous.ruleId &&
+      previous.autoSuppressedIds
+    ) {
+      onRevertDismissLearning(
+        previous.ruleId,
+        previous.transactionId,
+        previous.autoSuppressedIds,
+      )
+      setLearningNotice('Dismissal learning reverted — suppressed flags restored.')
+    }
+
     setReviewHistory((current) => current.slice(0, -1))
-    setActiveIndex(previous.index)
   }
 
   if (!analysisResult) {
@@ -131,17 +231,33 @@ function ReviewQueuePage({ analysisResult }: { analysisResult: any }) {
       <header className="review-queue__header">
         <h1>Review Queue</h1>
         <p className="review-queue__subtitle">
-          Work through flagged transactions one at a time.
+          Work through flagged transactions one at a time. Dismissing a flag
+          teaches the system for this session — thresholds tighten and similar
+          flags are suppressed.
         </p>
       </header>
 
-      {flaggedQueue.length === 0 && <p>No flagged transactions in the queue.</p>}
+      {learningSummary && (
+        <p className="review-queue__learning" role="status">
+          Session learning active: {learningSummary}
+        </p>
+      )}
+
+      {learningNotice && (
+        <p className="review-queue__learning review-queue__learning--flash" role="status">
+          {learningNotice}
+        </p>
+      )}
+
+      {flaggedQueue.length === 0 && (
+        <p>No flagged transactions in the queue.</p>
+      )}
 
       {flaggedQueue.length > 0 && (
         <>
-          {!queueComplete && (
+          {!queueComplete && currentTransaction && (
             <p className="review-queue__progress">
-              Reviewing {activeIndex + 1} of {flaggedQueue.length}
+              Reviewing {reviewedCount + 1} of {flaggedQueue.length}
             </p>
           )}
 
@@ -155,9 +271,7 @@ function ReviewQueuePage({ analysisResult }: { analysisResult: any }) {
                 Undo {getActionBadge(lastDecision.action).toLowerCase()}
               </button>
               <span className="review-queue__undo-hint">
-                Return to{' '}
-                {flaggedQueue[lastDecision.index]?.transaction_id ?? 'previous'}{' '}
-                transaction
+                Return to {lastDecision.transactionId}
               </span>
             </div>
           )}
@@ -172,20 +286,37 @@ function ReviewQueuePage({ analysisResult }: { analysisResult: any }) {
             <h2 className="review-queue__section-title">Flagged transactions</h2>
 
             <div className="review-queue__list">
-              {flaggedQueue.map((transaction: Transaction, index: number) => {
-                if (index < activeIndex) {
-                  const action = decisionsByIndex.get(index)
+              {flaggedQueue.map((transaction: Transaction) => {
+                const isReviewed = reviewedIds.has(transaction.transaction_id)
+                const isCurrent =
+                  currentTransaction?.transaction_id === transaction.transaction_id
+
+                if (isReviewed) {
+                  const action = decisionsByTransactionId.get(
+                    transaction.transaction_id,
+                  )
+                  const wasAutoSuppressed = sessionLearning.autoSuppressedIds.includes(
+                    transaction.transaction_id,
+                  )
+
                   return (
                     <CollapsedEntry
                       key={transaction.transaction_id}
                       transaction={transaction}
-                      badge={action ? getActionBadge(action) : 'Reviewed'}
+                      badge={
+                        wasAutoSuppressed && action === undefined
+                          ? 'Suppressed'
+                          : action
+                            ? getActionBadge(action)
+                            : 'Reviewed'
+                      }
                       reviewed
+                      suppressed={wasAutoSuppressed}
                     />
                   )
                 }
 
-                if (index === activeIndex && !queueComplete) {
+                if (isCurrent && !queueComplete) {
                   return (
                     <article
                       key={transaction.transaction_id}
