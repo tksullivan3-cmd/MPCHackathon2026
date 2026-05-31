@@ -24,13 +24,32 @@ def enrich_dataframe(
     ]
     return out
 
-
 def write_enriched_csv(df: pd.DataFrame, output_path: str | Path) -> Path:
     path = Path(output_path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    df.to_csv(path, index=False)
-    return path
 
+    download_columns = [
+        "transaction_id",
+        "timestamp",
+        "card_id",
+        "amount",
+        "merchant_name",
+        "merchant_category",
+        "channel",
+        "cardholder_country",
+        "merchant_country",
+        "fraud_score",
+        "risk_level",
+        "is_flagged",
+        "flag_reasons",
+    ]
+
+    existing_download_columns = [
+        column for column in download_columns if column in df.columns
+    ]
+
+    df[existing_download_columns].to_csv(path, index=False)
+    return path
 
 def ranked_suspicious(df: pd.DataFrame, limit: int | None = None) -> pd.DataFrame:
     """Return transactions sorted by fraud_score descending."""
