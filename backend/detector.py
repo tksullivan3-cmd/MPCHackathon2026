@@ -291,8 +291,23 @@ def detect_fraud(csv_path, output_path="transactions_flagged.csv"):
     top_idx = df.nlargest(num_to_flag, "fraud_score").index
     df.loc[top_idx, "is_flagged"] = True
 
-    df.to_csv(output_path, index=False)
+    download_columns = [
+    "transaction_id",
+    "timestamp",
+    "card_id",
+    "amount",
+    "merchant_name",
+    "merchant_category",
+    "channel",
+    "cardholder_country",
+    "merchant_country",
+    "fraud_score",
+    "risk_level",
+    "is_flagged",
+    "flag_reasons",
+    ]
 
+    df[download_columns].to_csv(output_path, index=False)
     return df
 
 
