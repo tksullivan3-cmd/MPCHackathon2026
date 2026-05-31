@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import './ReviewQueuePage.css'
 
 type Transaction = {
@@ -67,13 +68,22 @@ function ReviewQueuePage({ analysisResult }: { analysisResult: any }) {
 
   if (!analysisResult) {
     return (
-      <section className="review-queue">
-        <header className="review-queue__header">
-          <h1>Review Queue</h1>
-          <p className="review-queue__subtitle">
-            Upload and analyze transactions first.
+      <section className="review-queue review-queue--empty">
+        <div className="review-queue__empty">
+          <h1 className="review-queue__empty-title">Upload the dataset first</h1>
+          <p className="review-queue__empty-text">
+            Analyze your transactions on the Upload page before reviewing flagged
+            entries here.
           </p>
-        </header>
+          <img
+            className="review-queue__empty-art"
+            src="/images/review_queue_art.png"
+            alt="Review queue illustration"
+          />
+          <Link className="review-queue__empty-link" to="/upload">
+            Go to Upload
+          </Link>
+        </div>
       </section>
     )
   }
