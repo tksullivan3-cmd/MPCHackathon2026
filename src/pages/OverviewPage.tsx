@@ -1,5 +1,13 @@
 import './OverviewPage.css'
 
+function formatLabel(label: string): string {
+  return label
+    .replaceAll('_', ' ')
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+
 function OverviewPage({ analysisResult }: { analysisResult: any }) {
   if (!analysisResult) {
     return (
@@ -15,19 +23,36 @@ function OverviewPage({ analysisResult }: { analysisResult: any }) {
   }
 
   const transactions = analysisResult.transactions ?? []
+  const flaggedCount = transactions.length
+
+  const highRiskCount = transactions.filter(
+    (t: any) => t.risk_level === 'high' || t.fraud_score >= 80,
+  ).length
+
+  const mediumRiskCount = transactions.filter(
+    (t: any) =>
+      t.risk_level === 'medium' ||
+      (t.fraud_score >= 50 && t.fraud_score < 80),
+  ).length
+
+  const lowRiskCount = transactions.filter(
+    (t: any) =>
+      t.risk_level === 'low' ||
+      t.fraud_score < 50,
+  ).length
 
   const summaryCards = [
     { label: 'Total Transactions', value: analysisResult.total_transactions },
-    { label: 'Flagged Transactions', value: analysisResult.flagged_transactions },
-    { label: 'High Risk', value: analysisResult.high_risk_count },
-    { label: 'Medium Risk', value: analysisResult.medium_risk_count },
-    { label: 'Low Risk', value: analysisResult.low_risk_count },
+    { label: 'Flagged Transactions', value: flaggedCount },
+    { label: 'High Risk', value: highRiskCount },
+    { label: 'Medium Risk', value: mediumRiskCount },
+    { label: 'Low Risk', value: lowRiskCount },
   ]
 
   const riskBreakdown = [
-    { label: 'High', value: analysisResult.high_risk_count },
-    { label: 'Medium', value: analysisResult.medium_risk_count },
-    { label: 'Low', value: analysisResult.low_risk_count },
+    { label: 'High', value: highRiskCount },
+    { label: 'Medium', value: mediumRiskCount },
+    { label: 'Low', value: lowRiskCount },
   ]
 
   const scoreBuckets = [
@@ -74,13 +99,13 @@ function OverviewPage({ analysisResult }: { analysisResult: any }) {
     {},
   )
 
-  const fraudByCategory = Object.entries(categoryCounts).map(
-    ([category, value]) => ({
+  const fraudByCategory = Object.entries(categoryCounts)
+    .map(([category, value]) => ({
       category,
       value,
       percent: Math.round((value / Math.max(transactions.length, 1)) * 100),
-    }),
-  )
+    }))
+    .sort((a, b) => b.percent - a.percent)
 
   const riskMax = Math.max(...riskBreakdown.map((r) => r.value), 1)
   const scoreMax = Math.max(...scoreBuckets.map((b) => b.value), 1)
@@ -178,7 +203,7 @@ function OverviewPage({ analysisResult }: { analysisResult: any }) {
                 {topSuspicious.map((tx: any) => (
                   <tr key={tx.transaction_id}>
                     <td>{tx.transaction_id}</td>
-                    <td>{tx.merchant_name}</td>
+                    <td>{formatLabel(tx.merchant_name)}</td>
                     <td>
                       <span className="overview-score-pill">
                         {tx.fraud_score}
@@ -190,7 +215,7 @@ function OverviewPage({ analysisResult }: { analysisResult: any }) {
             </table>
           </article>
 
-          <article className="overview-chart">
+          <article className="overview-chart overview-chart--category">
             <h3 className="overview-chart__title">Flagged by Category</h3>
 
             <div className="overview-pie-layout">
@@ -209,7 +234,7 @@ function OverviewPage({ analysisResult }: { analysisResult: any }) {
               >
                 <div className="overview-pie__center">
                   <strong className="overview-pie__count">
-                    {transactions.length}
+                    {flaggedCount}
                   </strong>
                   <span>flagged</span>
                 </div>
@@ -219,7 +244,7 @@ function OverviewPage({ analysisResult }: { analysisResult: any }) {
                 {fraudByCategory.map((item) => (
                   <li key={item.category}>
                     <span className="overview-pie-legend__label">
-                      {item.category.replaceAll('_', ' ')}
+                      {formatLabel(item.category)}
                     </span>
                     <strong>{item.percent}%</strong>
                   </li>
