@@ -208,7 +208,9 @@ function OverviewPage({ analysisResult }: { analysisResult: any }) {
                 }}
               >
                 <div className="overview-pie__center">
-                  {transactions.length}
+                  <strong className="overview-pie__count">
+                    {transactions.length}
+                  </strong>
                   <span>flagged</span>
                 </div>
               </div>
@@ -216,7 +218,9 @@ function OverviewPage({ analysisResult }: { analysisResult: any }) {
               <ul className="overview-pie-legend">
                 {fraudByCategory.map((item) => (
                   <li key={item.category}>
-                    <span>{item.category}</span>
+                    <span className="overview-pie-legend__label">
+                      {item.category.replaceAll('_', ' ')}
+                    </span>
                     <strong>{item.percent}%</strong>
                   </li>
                 ))}
