@@ -91,6 +91,22 @@
   color: var(--text-h);
 }
 
+.review-queue__learning {
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  border: 2px solid var(--accent);
+  background: var(--accent-bg);
+  color: var(--text-h);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.review-queue__learning--flash {
+  border-color: var(--success);
+  background: color-mix(in srgb, var(--success) 12%, var(--surface));
+}
+
 .review-queue__undo {
   display: flex;
   flex-wrap: wrap;
@@ -157,6 +173,10 @@
 
 .review-card--reviewed {
   opacity: 0.75;
+}
+
+.review-card--suppressed {
+  border-style: dashed;
 }
 
 .review-card__summary {
