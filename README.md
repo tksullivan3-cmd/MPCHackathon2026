@@ -114,7 +114,7 @@ uvicorn main:app --reload
 ```powershell
 cd backend
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+./.venv/Scripts/Activate.ps1
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```
@@ -124,7 +124,7 @@ uvicorn main:app --reload
 ```cmd
 cd backend
 python -m venv .venv
-.venv\Scripts\activate.bat
+.venv/Scripts/activate.bat
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```
