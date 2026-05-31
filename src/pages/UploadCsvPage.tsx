@@ -6,6 +6,40 @@ function isCsvFile(file: File): boolean {
   return file.name.toLowerCase().endsWith('.csv')
 }
 
+function getFlaggedRiskCounts(result: {
+  transactions?: Array<{ risk_level?: string; fraud_score?: number }>
+  high_risk_count?: number
+  medium_risk_count?: number
+  low_risk_count?: number
+}) {
+  const transactions = result.transactions ?? []
+
+  if (transactions.length > 0) {
+    let high = 0
+    let medium = 0
+    let low = 0
+
+    for (const t of transactions) {
+      const score = Number(t.fraud_score)
+      if (t.risk_level === 'high' || score >= 65) {
+        high += 1
+      } else if (t.risk_level === 'medium' || score >= 40) {
+        medium += 1
+      } else {
+        low += 1
+      }
+    }
+
+    return { high, medium, low }
+  }
+
+  return {
+    high: result.high_risk_count ?? 0,
+    medium: result.medium_risk_count ?? 0,
+    low: result.low_risk_count ?? 0,
+  }
+}
+
 function UploadCsvPage({
   setAnalysisResult,
 }: {
@@ -120,26 +154,40 @@ function UploadCsvPage({
 
           <p>
             The detector flagged{' '}
-            <strong>{localAnalysisResult.flagged_transactions}</strong>{' '}
+            <strong>
+              {localAnalysisResult.flagged_transactions ??
+                localAnalysisResult.transactions?.length ??
+                0}
+            </strong>{' '}
             suspicious transactions for review.
           </p>
 
-          <div className="success-stats">
-            <div>
-              <strong>{localAnalysisResult.high_risk_count}</strong>
-              <span>High Risk</span>
-            </div>
+          {(() => {
+            const risk = getFlaggedRiskCounts(localAnalysisResult)
+            return (
+              <>
+                <p className="success-stats-caption">
+                  Risk breakdown among flagged transactions
+                </p>
+                <div className="success-stats">
+                  <div>
+                    <strong>{risk.high}</strong>
+                    <span>High Risk</span>
+                  </div>
 
-            <div>
-              <strong>{localAnalysisResult.medium_risk_count}</strong>
-              <span>Medium Risk</span>
-            </div>
+                  <div>
+                    <strong>{risk.medium}</strong>
+                    <span>Medium Risk</span>
+                  </div>
 
-            <div>
-              <strong>{localAnalysisResult.low_risk_count}</strong>
-              <span>Low Risk</span>
-            </div>
-          </div>
+                  <div>
+                    <strong>{risk.low}</strong>
+                    <span>Low Risk</span>
+                  </div>
+                </div>
+              </>
+            )
+          })()}
 
           <a
             className="download-csv-button"

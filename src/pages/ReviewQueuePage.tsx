@@ -25,14 +25,14 @@ type Transaction = TransactionRow & {
 }
 
 function getRiskClass(score: number): string {
-  if (score >= 80) return 'review-card__risk--high'
-  if (score >= 50) return 'review-card__risk--medium'
+  if (score >= 65) return 'review-card__risk--high'
+  if (score >= 40) return 'review-card__risk--medium'
   return 'review-card__risk--low'
 }
 
 function getRiskLabel(score: number): string {
-  if (score >= 80) return 'High risk'
-  if (score >= 50) return 'Medium risk'
+  if (score >= 65) return 'High risk'
+  if (score >= 40) return 'Medium risk'
   return 'Low risk'
 }
 
@@ -43,7 +43,7 @@ function getRiskGroup(transaction: Transaction): 'high' | 'medium' | 'low' {
     return 'high'
   }
 
-  if (transaction.risk_level === 'medium' || (score >= 50 && score < 80)) {
+  if (transaction.risk_level === 'medium' || (score >= 40 && score < 65)) {
     return 'medium'
   }
 

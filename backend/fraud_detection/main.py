@@ -103,9 +103,9 @@ def run_pipeline(
     summary = {
         "total_transactions": len(enriched),
         "flagged_transactions": len(flagged_df),
-        "high_risk_count": int((enriched["risk_level"] == "high").sum()),
-        "medium_risk_count": int((enriched["risk_level"] == "medium").sum()),
-        "low_risk_count": int((enriched["risk_level"] == "low").sum()),
+        "high_risk_count": int((flagged_df["risk_level"] == "high").sum()),
+        "medium_risk_count": int((flagged_df["risk_level"] == "medium").sum()),
+        "low_risk_count": int((flagged_df["risk_level"] == "low").sum()),
         "flag_threshold": thresholds["flag_threshold"],
         "flag_rate": thresholds["flag_rate"],
         "sensitivity": sensitivity,

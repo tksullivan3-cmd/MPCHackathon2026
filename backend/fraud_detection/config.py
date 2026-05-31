@@ -68,8 +68,8 @@ DEFAULT_THRESHOLDS: ThresholdConfig = {
     "cross_card_ip_min_cards": 3,
     "flag_threshold": 60.0,
     "flag_rate": 0.07,
-    "high_risk_threshold": 80.0,
-    "medium_risk_threshold": 50.0,
+    "high_risk_threshold": 65.0,
+    "medium_risk_threshold": 40.0,
     "max_reasons_per_tx": 5,
 }
 
