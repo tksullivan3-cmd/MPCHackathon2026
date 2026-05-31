@@ -21,6 +21,7 @@ type Transaction = TransactionRow & {
   timestamp: string
   amount: number
   risk_level: string
+  merchant_category?: string
 }
 
 function getRiskClass(score: number): string {
@@ -35,10 +36,39 @@ function getRiskLabel(score: number): string {
   return 'Low risk'
 }
 
+function getRiskGroup(transaction: Transaction): 'high' | 'medium' | 'low' {
+  const score = Number(transaction.fraud_score)
+
+  if (transaction.risk_level === 'high' || score >= 80) {
+    return 'high'
+  }
+
+  if (transaction.risk_level === 'medium' || (score >= 50 && score < 80)) {
+    return 'medium'
+  }
+
+  return 'low'
+}
+
 function getActionBadge(action: ReviewAction): string {
   if (action === 'approve') return 'Approved'
   if (action === 'dismiss') return 'Dismissed'
   return 'Escalated'
+}
+
+function formatMoney(amount: number): string {
+  return `$${Number(amount).toFixed(2)}`
+}
+
+function splitReasons(reasonText: string): string[] {
+  if (!reasonText) {
+    return ['No reason provided.']
+  }
+
+  return reasonText
+    .split(';')
+    .map((reason) => reason.trim())
+    .filter(Boolean)
 }
 
 function CollapsedEntry({
@@ -64,6 +94,7 @@ function CollapsedEntry({
           <span>{transaction.card_id}</span>
           <span>{transaction.merchant_name}</span>
         </span>
+
         <span className="review-card__badge">{badge}</span>
       </div>
     </article>
@@ -77,12 +108,12 @@ function ReviewQueuePage({
   onRevertDismissLearning,
 }: {
   analysisResult: any
-  sessionLearning: SessionLearningState
-  onLearnFromDismiss: (
+  sessionLearning?: SessionLearningState
+  onLearnFromDismiss?: (
     transaction: TransactionRow,
     pendingAfterDismiss: TransactionRow[],
   ) => { ruleId: string; autoSuppressedIds: string[] }
-  onRevertDismissLearning: (
+  onRevertDismissLearning?: (
     ruleId: string,
     dismissedTransactionId: string,
     autoSuppressedIds: string[],
@@ -91,8 +122,18 @@ function ReviewQueuePage({
   const [reviewHistory, setReviewHistory] = useState<ReviewHistoryEntry[]>([])
   const [learningNotice, setLearningNotice] = useState<string | null>(null)
 
+  const [riskFilter, setRiskFilter] = useState('all')
+  const [searchTerm, setSearchTerm] = useState('')
+  const [minAmount, setMinAmount] = useState('')
+  const [maxAmount, setMaxAmount] = useState('')
+
   const adjustedAnalysis = useMemo(() => {
     if (!analysisResult) return null
+
+    if (!sessionLearning) {
+      return analysisResult
+    }
+
     return applySessionLearningToAnalysis(analysisResult, sessionLearning)
   }, [analysisResult, sessionLearning])
 
@@ -104,6 +145,52 @@ function ReviewQueuePage({
     [adjustedAnalysis],
   )
 
+  const filteredQueue = useMemo(() => {
+    return flaggedQueue.filter((transaction) => {
+      const riskGroup = getRiskGroup(transaction)
+
+      if (riskFilter !== 'all' && riskGroup !== riskFilter) {
+        return false
+      }
+
+      const amount = Number(transaction.amount)
+      const min = minAmount ? Number(minAmount) : null
+      const max = maxAmount ? Number(maxAmount) : null
+
+      if (min !== null && amount < min) {
+        return false
+      }
+
+      if (max !== null && amount > max) {
+        return false
+      }
+
+      const search = searchTerm.trim().toLowerCase()
+
+      if (search) {
+        const searchableText = [
+          transaction.transaction_id,
+          transaction.card_id,
+          transaction.merchant_name,
+          transaction.merchant_category,
+          transaction.risk_level,
+          transaction.fraud_score,
+          transaction.amount,
+          transaction.flag_reasons,
+          transaction.timestamp,
+        ]
+          .join(' ')
+          .toLowerCase()
+
+        if (!searchableText.includes(search)) {
+          return false
+        }
+      }
+
+      return true
+    })
+  }, [flaggedQueue, riskFilter, searchTerm, minAmount, maxAmount])
+
   const reviewedIds = useMemo(
     () => new Set(reviewHistory.map((entry) => entry.transactionId)),
     [reviewHistory],
@@ -111,32 +198,44 @@ function ReviewQueuePage({
 
   const decisionsByTransactionId = useMemo(() => {
     const map = new Map<string, ReviewAction>()
+
     for (const entry of reviewHistory) {
       map.set(entry.transactionId, entry.action)
     }
+
     return map
   }, [reviewHistory])
 
-  const currentTransaction = flaggedQueue.find(
+  const currentTransaction = filteredQueue.find(
     (transaction) => !reviewedIds.has(transaction.transaction_id),
   )
 
-  const reviewedCount = reviewHistory.length
-  const queueComplete =
-    flaggedQueue.length > 0 && reviewedCount >= flaggedQueue.length
+  const reviewedFilteredCount = filteredQueue.filter((transaction) =>
+    reviewedIds.has(transaction.transaction_id),
+  ).length
 
+  const queueComplete = filteredQueue.length > 0 && !currentTransaction
   const canUndo = reviewHistory.length > 0
   const lastDecision = reviewHistory[reviewHistory.length - 1]
-  const learningSummary = getLearningSummary(sessionLearning)
+
+  const learningSummary = sessionLearning
+    ? getLearningSummary(sessionLearning)
+    : null
 
   useEffect(() => {
     setReviewHistory([])
     setLearningNotice(null)
+    setRiskFilter('all')
+    setSearchTerm('')
+    setMinAmount('')
+    setMaxAmount('')
   }, [analysisResult])
 
   useEffect(() => {
     if (!learningNotice) return
+
     const timer = window.setTimeout(() => setLearningNotice(null), 5000)
+
     return () => window.clearTimeout(timer)
   }, [learningNotice])
 
@@ -146,7 +245,7 @@ function ReviewQueuePage({
     let ruleId: string | undefined
     let autoSuppressedIds: string[] = []
 
-    if (action === 'dismiss') {
+    if (action === 'dismiss' && sessionLearning && onLearnFromDismiss) {
       const pendingAfterDismiss = flaggedQueue.filter(
         (transaction) =>
           transaction.transaction_id !== currentTransaction.transaction_id &&
@@ -163,7 +262,9 @@ function ReviewQueuePage({
 
       if (autoSuppressedIds.length > 0) {
         setLearningNotice(
-          `Learned from dismissal — ${autoSuppressedIds.length} similar flag${autoSuppressedIds.length === 1 ? '' : 's'} suppressed this session.`,
+          `Learned from dismissal — ${autoSuppressedIds.length} similar flag${
+            autoSuppressedIds.length === 1 ? '' : 's'
+          } suppressed this session.`,
         )
       } else {
         setLearningNotice(
@@ -191,17 +292,27 @@ function ReviewQueuePage({
     if (
       previous.action === 'dismiss' &&
       previous.ruleId &&
-      previous.autoSuppressedIds
+      previous.autoSuppressedIds &&
+      sessionLearning &&
+      onRevertDismissLearning
     ) {
       onRevertDismissLearning(
         previous.ruleId,
         previous.transactionId,
         previous.autoSuppressedIds,
       )
+
       setLearningNotice('Dismissal learning reverted — suppressed flags restored.')
     }
 
     setReviewHistory((current) => current.slice(0, -1))
+  }
+
+  function clearFilters() {
+    setRiskFilter('all')
+    setSearchTerm('')
+    setMinAmount('')
+    setMaxAmount('')
   }
 
   if (!analysisResult) {
@@ -209,15 +320,18 @@ function ReviewQueuePage({
       <section className="review-queue review-queue--empty">
         <div className="review-queue__empty">
           <h1 className="review-queue__empty-title">Upload the dataset first</h1>
+
           <p className="review-queue__empty-text">
             Analyze your transactions on the Upload page before reviewing flagged
             entries here.
           </p>
+
           <img
             className="review-queue__empty-art"
             src="/images/review_queue_art.png"
             alt="Review queue illustration"
           />
+
           <Link className="review-queue__empty-link" to="/upload">
             Go to Upload
           </Link>
@@ -230,6 +344,7 @@ function ReviewQueuePage({
     <section className="review-queue">
       <header className="review-queue__header">
         <h1>Review Queue</h1>
+
         <p className="review-queue__subtitle">
           Work through flagged transactions one at a time. Dismissing a flag
           teaches the system for this session — thresholds tighten and similar
@@ -244,20 +359,89 @@ function ReviewQueuePage({
       )}
 
       {learningNotice && (
-        <p className="review-queue__learning review-queue__learning--flash" role="status">
+        <p
+          className="review-queue__learning review-queue__learning--flash"
+          role="status"
+        >
           {learningNotice}
         </p>
       )}
 
-      {flaggedQueue.length === 0 && (
-        <p>No flagged transactions in the queue.</p>
+      <section className="review-filters" aria-label="Review queue filters">
+        <div className="review-filter">
+          <label htmlFor="risk-filter">Risk</label>
+
+          <select
+            id="risk-filter"
+            value={riskFilter}
+            onChange={(event) => setRiskFilter(event.target.value)}
+          >
+            <option value="all">All risks</option>
+            <option value="high">High risk</option>
+            <option value="medium">Medium risk</option>
+            <option value="low">Low risk</option>
+          </select>
+        </div>
+
+        <div className="review-filter review-filter--wide">
+          <label htmlFor="search-filter">Search transactions</label>
+
+          <input
+            id="search-filter"
+            type="text"
+            placeholder="Search transactions / merchants"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
+        </div>
+
+        <div className="review-filter">
+          <label htmlFor="min-amount">Min amount</label>
+
+          <input
+            id="min-amount"
+            type="number"
+            min="0"
+            placeholder="0"
+            value={minAmount}
+            onChange={(event) => setMinAmount(event.target.value)}
+          />
+        </div>
+
+        <div className="review-filter">
+          <label htmlFor="max-amount">Max amount</label>
+
+          <input
+            id="max-amount"
+            type="number"
+            min="0"
+            placeholder="2000"
+            value={maxAmount}
+            onChange={(event) => setMaxAmount(event.target.value)}
+          />
+        </div>
+
+        <button type="button" className="review-filter__clear" onClick={clearFilters}>
+          Clear
+        </button>
+      </section>
+
+      <p className="review-queue__progress">
+        Showing {filteredQueue.length} of {flaggedQueue.length} flagged
+        transactions
+      </p>
+
+      {filteredQueue.length === 0 && (
+        <p className="review-queue__error">
+          No flagged transactions match the current filters.
+        </p>
       )}
 
-      {flaggedQueue.length > 0 && (
+      {filteredQueue.length > 0 && (
         <>
           {!queueComplete && currentTransaction && (
             <p className="review-queue__progress">
-              Reviewing {reviewedCount + 1} of {flaggedQueue.length}
+              Reviewing {reviewedFilteredCount + 1} of {filteredQueue.length}
             </p>
           )}
 
@@ -270,6 +454,7 @@ function ReviewQueuePage({
               >
                 Undo {getActionBadge(lastDecision.action).toLowerCase()}
               </button>
+
               <span className="review-queue__undo-hint">
                 Return to {lastDecision.transactionId}
               </span>
@@ -278,7 +463,8 @@ function ReviewQueuePage({
 
           {queueComplete && (
             <p className="review-queue__complete" role="status">
-              Review queue complete. All flagged entries have been reviewed.
+              Review queue complete. All matching flagged entries have been
+              reviewed.
             </p>
           )}
 
@@ -286,18 +472,22 @@ function ReviewQueuePage({
             <h2 className="review-queue__section-title">Flagged transactions</h2>
 
             <div className="review-queue__list">
-              {flaggedQueue.map((transaction: Transaction) => {
+              {filteredQueue.map((transaction: Transaction) => {
                 const isReviewed = reviewedIds.has(transaction.transaction_id)
+
                 const isCurrent =
-                  currentTransaction?.transaction_id === transaction.transaction_id
+                  currentTransaction?.transaction_id ===
+                  transaction.transaction_id
 
                 if (isReviewed) {
                   const action = decisionsByTransactionId.get(
                     transaction.transaction_id,
                   )
-                  const wasAutoSuppressed = sessionLearning.autoSuppressedIds.includes(
-                    transaction.transaction_id,
-                  )
+
+                  const wasAutoSuppressed =
+                    sessionLearning?.autoSuppressedIds.includes(
+                      transaction.transaction_id,
+                    ) ?? false
 
                   return (
                     <CollapsedEntry
@@ -317,6 +507,8 @@ function ReviewQueuePage({
                 }
 
                 if (isCurrent && !queueComplete) {
+                  const reasons = splitReasons(transaction.flag_reasons ?? '')
+
                   return (
                     <article
                       key={transaction.transaction_id}
@@ -332,29 +524,39 @@ function ReviewQueuePage({
                           {transaction.fraud_score}
                         </span>
 
-                        <p className="review-card__reason">
+                        <div className="review-card__reason">
                           <span className="review-card__reason-label">
                             Why flagged
                           </span>
-                          {transaction.flag_reasons || 'No reason provided.'}
-                        </p>
+
+                          <ol className="review-card__reason-list">
+                            {reasons.map((reason, reasonIndex) => (
+                              <li key={`${transaction.transaction_id}-${reasonIndex}`}>
+                                {reason}
+                              </li>
+                            ))}
+                          </ol>
+                        </div>
 
                         <dl className="review-card__details">
                           <div className="review-card__detail">
                             <dt>ID</dt>
                             <dd>{transaction.transaction_id}</dd>
                           </div>
+
                           <div className="review-card__detail">
                             <dt>Card</dt>
                             <dd>{transaction.card_id}</dd>
                           </div>
+
                           <div className="review-card__detail">
                             <dt>Merchant</dt>
                             <dd>{transaction.merchant_name}</dd>
                           </div>
+
                           <div className="review-card__detail">
                             <dt>Amount</dt>
-                            <dd>${Number(transaction.amount).toFixed(2)}</dd>
+                            <dd>{formatMoney(transaction.amount)}</dd>
                           </div>
                         </dl>
 
@@ -366,6 +568,7 @@ function ReviewQueuePage({
                           >
                             Approve
                           </button>
+
                           <button
                             type="button"
                             className="review-card__action review-card__action--dismiss"
@@ -373,6 +576,7 @@ function ReviewQueuePage({
                           >
                             Dismiss
                           </button>
+
                           <button
                             type="button"
                             className="review-card__action review-card__action--escalate"
