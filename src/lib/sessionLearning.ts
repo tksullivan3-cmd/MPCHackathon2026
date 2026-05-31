@@ -215,11 +215,11 @@ export function applySessionLearningToAnalysis(
   )
 
   const highRiskCount = transactions.filter(
-    (t) => Number(t.fraud_score) >= 80,
+    (t) => Number(t.fraud_score) >= 65,
   ).length
   const mediumRiskCount = transactions.filter((t) => {
     const score = Number(t.fraud_score)
-    return score >= 50 && score < 80
+    return score >= 40 && score < 65
   }).length
   const lowRiskCount = transactions.filter((t) => Number(t.fraud_score) < 50).length
 

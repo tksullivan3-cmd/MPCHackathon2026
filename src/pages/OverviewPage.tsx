@@ -36,19 +36,19 @@ function OverviewPage({ analysisResult }: { analysisResult: any }) {
   const flaggedCount = transactions.length
 
   const highRiskCount = transactions.filter(
-    (t: any) => t.risk_level === 'high' || t.fraud_score >= 80,
+    (t: any) => t.risk_level === 'high' || t.fraud_score >= 65,
   ).length
 
   const mediumRiskCount = transactions.filter(
     (t: any) =>
       t.risk_level === 'medium' ||
-      (t.fraud_score >= 50 && t.fraud_score < 80),
+      (t.fraud_score >= 40 && t.fraud_score < 65),
   ).length
 
   const lowRiskCount = transactions.filter(
     (t: any) =>
       t.risk_level === 'low' ||
-      t.fraud_score < 50,
+      (t.fraud_score < 40 && t.risk_level !== 'medium' && t.risk_level !== 'high'),
   ).length
 
   const summaryCards = [
@@ -67,32 +67,32 @@ function OverviewPage({ analysisResult }: { analysisResult: any }) {
 
   const scoreBuckets = [
     {
-      label: '50–59',
+      label: '25–34',
       value: transactions.filter(
-        (t: any) => t.fraud_score >= 50 && t.fraud_score < 60,
+        (t: any) => t.fraud_score >= 25 && t.fraud_score < 35,
       ).length,
     },
     {
-      label: '60–69',
+      label: '35–44',
       value: transactions.filter(
-        (t: any) => t.fraud_score >= 60 && t.fraud_score < 70,
+        (t: any) => t.fraud_score >= 35 && t.fraud_score < 45,
       ).length,
     },
     {
-      label: '70–79',
+      label: '45–54',
       value: transactions.filter(
-        (t: any) => t.fraud_score >= 70 && t.fraud_score < 80,
+        (t: any) => t.fraud_score >= 45 && t.fraud_score < 55,
       ).length,
     },
     {
-      label: '80–89',
+      label: '55–64',
       value: transactions.filter(
-        (t: any) => t.fraud_score >= 80 && t.fraud_score < 90,
+        (t: any) => t.fraud_score >= 55 && t.fraud_score < 65,
       ).length,
     },
     {
-      label: '90+',
-      value: transactions.filter((t: any) => t.fraud_score >= 90).length,
+      label: '65+',
+      value: transactions.filter((t: any) => t.fraud_score >= 65).length,
     },
   ]
 

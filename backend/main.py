@@ -61,9 +61,9 @@ async def detect_fraud_endpoint(file: UploadFile = File(...)):
     return {
         "total_transactions": len(df),
         "flagged_transactions": len(flagged),
-        "high_risk_count": int((df["risk_level"] == "high").sum()),
-        "medium_risk_count": int((df["risk_level"] == "medium").sum()),
-        "low_risk_count": int((df["risk_level"] == "low").sum()),
+        "high_risk_count": int((flagged["risk_level"] == "high").sum()),
+        "medium_risk_count": int((flagged["risk_level"] == "medium").sum()),
+        "low_risk_count": int((flagged["risk_level"] == "low").sum()),
         "transactions": transactions,
     }
 

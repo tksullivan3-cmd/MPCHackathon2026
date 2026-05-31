@@ -37,6 +37,7 @@ __pycache__/
 .env.local
 .env.*.local
 
-# Uploaded/generated CSV data
+# Uploaded/generated CSV data and Python bytecode (never commit)
 backend/data/
+backend/**/__pycache__/
 data/
