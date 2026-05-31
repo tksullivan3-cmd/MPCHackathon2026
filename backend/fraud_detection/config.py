@@ -34,6 +34,7 @@ class ThresholdConfig(TypedDict):
     cross_card_device_min_cards: int
     cross_card_ip_min_cards: int
     flag_threshold: float
+    flag_rate: float
     high_risk_threshold: float
     medium_risk_threshold: float
     max_reasons_per_tx: int
@@ -66,9 +67,18 @@ DEFAULT_THRESHOLDS: ThresholdConfig = {
     "cross_card_device_min_cards": 3,
     "cross_card_ip_min_cards": 3,
     "flag_threshold": 60.0,
+    "flag_rate": 0.07,
     "high_risk_threshold": 80.0,
     "medium_risk_threshold": 50.0,
     "max_reasons_per_tx": 5,
+}
+
+# Deterministic category risk (not ML) — contributes via category_rarity weight
+HIGH_RISK_CATEGORIES: dict[str, float] = {
+    "gift_card": 1.0,
+    "electronics": 0.65,
+    "travel": 0.45,
+    "atm": 0.45,
 }
 
 SENSITIVITY_PRESETS: dict[SensitivityMode, dict[str, Any]] = {

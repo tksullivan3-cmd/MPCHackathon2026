@@ -77,7 +77,7 @@ Scores from all signals are summed into `fraud_score`.
 
 ### Flagging policy
 
-Transactions with `fraud_score >= 60` (configurable; presets: strict 50, balanced 60, lenient 70) are flagged. Only flagged rows are returned to the frontend for the review queue and overview charts.
+Each transaction gets a **0–100** score (weighted rule categories, max one contribution per category). The **top 7%** highest-scoring transactions are flagged (`flag_rate = 0.07`, minimum 1 row). Only flagged rows are returned to the frontend for the review queue and overview charts.
 
 ### Session learning (frontend)
 

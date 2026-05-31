@@ -71,6 +71,17 @@ def _bullet_ip_reuse(ctx: dict) -> str:
     return f"IP address reused across {n} different cards (global anomaly)"
 
 
+def _bullet_high_risk_category(ctx: dict) -> str:
+    cat = ctx.get("merchant_category", "category")
+    labels = {
+        "gift_card": "Gift card purchase",
+        "electronics": "Electronics purchase",
+        "travel": "Travel purchase",
+        "atm": "ATM transaction",
+    }
+    return labels.get(str(cat), f"High-risk category: {cat}")
+
+
 def _bullet_merchant_spike(ctx: dict) -> str:
     tx = ctx.get("merchant_tx_in_window", "?")
     cards = ctx.get("merchant_unique_cards_in_window", "?")
@@ -82,7 +93,9 @@ def _bullet_merchant_spike(ctx: dict) -> str:
 
 SIGNAL_EXPLAINERS: dict[str, Callable[[RuleResult], str]] = {
     "amount_zscore_high": lambda r: _bullet_amount_zscore(r.context),
+    "amount_zscore_elevated": lambda r: _bullet_amount_zscore(r.context),
     "amount_ratio_spike": lambda r: _bullet_amount_ratio(r.context),
+    "high_risk_category": lambda r: _bullet_high_risk_category(r.context),
     "amount_ratio_moderate": lambda r: _bullet_amount_ratio(r.context),
     "amount_iqr_outlier": lambda _: _bullet_amount_iqr(),
     "velocity_burst": lambda r: _bullet_velocity(r.context),
@@ -101,6 +114,7 @@ SIGNAL_EXPLAINERS: dict[str, Callable[[RuleResult], str]] = {
 SIGNAL_PRIORITY: list[str] = [
     "amount_ratio_spike",
     "amount_zscore_high",
+    "high_risk_category",
     "cross_card_device_reuse",
     "new_device",
     "foreign_transaction",
