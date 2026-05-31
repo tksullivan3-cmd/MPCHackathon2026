@@ -1,6 +1,6 @@
 # Fraud Hunter
 
-A full-stack fraud detection tool built for the MPC Hackathon 2026. Upload transaction CSV data, run a rule-based scoring engine, explore results on a dashboard, and work through flagged transactions in a reviewer queue—with session learning that adjusts thresholds when analysts dismiss false positives.
+A full-stack fraud detection tool built for the MPC Hackathon 2026. Upload transaction CSV data, run a rule-based scoring engine, explore results on a dashboard, download a cleaned flagged CSV, and work through suspicious transactions in a reviewer queue.
 
 ## Documentation
 
@@ -9,184 +9,208 @@ A full-stack fraud detection tool built for the MPC Hackathon 2026. Upload trans
 
 ## Overview
 
-**Fraud Hunter** helps teams analyze card transaction data and surface suspicious activity for human review. The app combines a **React + TypeScript** frontend with a **Python FastAPI** backend that scores every transaction, assigns risk levels, and flags the highest-risk subset for investigation.
+Fraud Hunter helps teams analyze card transaction data and surface suspicious activity for human review. The app combines a React and TypeScript frontend with a Python FastAPI backend that scores transactions, assigns risk levels, explains why transactions were flagged, and returns a reviewer-friendly CSV export.
 
 Typical workflow:
 
-1. **Upload** a `transactions.csv` file on the Upload page.
-2. **Analyze** transactions via the backend fraud detector.
-3. **Overview** — view summary metrics, charts, and recent alerts.
-4. **Review Queue** — approve, dismiss, or escalate flagged items one at a time.
-
-Dismissals teach the system **within the current session**: thresholds tighten slightly and similar future flags can be suppressed, reducing repeat false positives without re-running the backend.
+1. Upload a transactions.csv file on the Upload page.
+2. Analyze transactions through the backend fraud detection API.
+3. View summary metrics and charts on the Overview page.
+4. Review suspicious transactions one at a time in the Review Queue.
+5. Download the cleaned flagged CSV for reporting or further investigation.
 
 ## Features
 
-- **CSV upload & validation** — accepts `.csv` files and sends them to the API for analysis
-- **Fraud scoring engine** — multi-signal detector with explainable `flag_reasons` per transaction
-- **Overview dashboard** — summary cards, risk breakdown, score distribution, top suspicious transactions, category breakdown, and recent alerts table
-- **Review queue** — one-at-a-time review with **Approve**, **Dismiss**, and **Escalate**
-- **Undo** — revert the last review action (including dismissal learning)
-- **Session learning** — dismissing a flag adjusts in-session thresholds and suppresses similar flags (merchant, category, reason patterns)
-- **Dark mode** — theme toggle with persisted preference
-- **Upload conveyor animation** — visual “scanning” belt with magnifying-glass fraud detection demo
-- **Responsive layout** — desktop-first UI with partial responsive breakpoints
+- CSV upload and validation
+- FastAPI backend for fraud analysis
+- Rule-based fraud scoring engine
+- Explainable flag reasons for each suspicious transaction
+- Overview dashboard with summary cards and charts
+- Review Queue with approve, dismiss, and escalate actions
+- Search and filtering in the Review Queue
+- Amount range filtering
+- Risk level filtering
+- Downloadable cleaned flagged CSV
+- Dark mode toggle
+- Upload conveyor animation
+- Responsive dashboard layout
 
 ## Flag detection strategy
 
-The backend module (`backend/fraud_detection/`) uses a **deterministic, rule-based** composite fraud score (no ML). Each transaction receives a score **0–100**, `is_flagged` (default threshold **60**), `risk_level`, and human-readable `flag_reasons`.
+The backend uses a deterministic, rule-based fraud detection engine. It does not use machine learning. Each transaction receives a fraud score, risk level, flag status, and human-readable explanations.
+
+The main fraud detection logic lives inside backend/fraud_detection/.
+
+The legacy backend/detector.py file only re-exports the package functions so older imports still work.
+
+## Backend architecture
 
 | Module | Role |
-|--------|------|
-| `loader.py` | CSV ingest + validation |
-| `features.py` | Statistical features (amount, velocity, merchant, geo, device/IP) |
-| `rules.py` | Anomaly signals (thresholds) |
-| `scorer.py` | Weighted score → 0–100 |
-| `explain.py` | Human-readable bullets (1–5 per flag) |
-| `export.py` | Enriched CSV + ranked output |
-| `config.py` | Weights, thresholds, `strict` / `balanced` / `lenient` |
+|---|---|
+| loader.py | Loads and validates CSV files |
+| features.py | Builds statistical features and card baselines |
+| rules.py | Applies fraud signal rules |
+| scorer.py | Combines signals into a fraud score |
+| explain.py | Creates human-readable flag explanations |
+| export.py | Exports cleaned CSV results |
+| config.py | Stores weights, thresholds, and scoring profiles |
+| main.py | Orchestrates the fraud detection pipeline |
 
-Legacy import: `from detector import detect_fraud` still works.
-
-### Per-card baselines
-
-For each `card_id`, the engine builds a baseline from historical rows in the upload:
-
-- Median spend amount
-- Usual merchants, categories, devices, IPs, and countries
-
-### Scoring signals
+## Scoring signals
 
 | Signal | What it detects |
-|--------|------------------|
-| **Amount anomaly** | Spend far above the card’s median (3×, 5×, 10× tiers) |
-| **Category risk** | Higher-risk merchant categories (e.g. gift cards, electronics, travel, ATM) |
-| **Country mismatch** | Merchant country ≠ cardholder country |
-| **Device / IP anomaly** | New device or IP for online channel transactions |
-| **Card velocity** | Many transactions on the same card within 10 minutes |
-| **Merchant burst** | Many transactions at one merchant across multiple cards within 30 minutes |
-| **Shared device / IP** | Same device or IP used by 3+ different cards |
+|---|---|
+| Amount anomaly | Transactions far above a card’s normal spending pattern |
+| Category risk | Higher-risk merchant categories such as gift cards, electronics, travel, or ATM |
+| Country mismatch | Merchant country differs from cardholder country |
+| Device or IP anomaly | New device or IP activity for online transactions |
+| Card velocity | Multiple transactions on the same card within a short time window |
+| Merchant burst | Many transactions at one merchant across multiple cards |
+| Shared device or IP | Same device or IP used across multiple cards |
 
-Scores from all signals are summed into `fraud_score`.
+## Risk levels
 
-### Risk levels
+| Risk level | Score range |
+|---|---|
+| High | 80 and above |
+| Medium | 50 to 79 |
+| Low | Below 50 |
 
-- **High** — score ≥ 80  
-- **Medium** — score ≥ 50  
-- **Low** — score &lt; 50  
+## Flagging policy
 
-### Flagging policy
+Each transaction receives a score from 0 to 100. The backend ranks transactions by fraud score and flags the highest-risk subset for review. Flagged transactions are returned to the frontend for the Overview dashboard and Review Queue.
 
-Each transaction gets a **0–100** score (weighted rule categories, max one contribution per category). The **top 7%** highest-scoring transactions are flagged (`flag_rate = 0.07`, minimum 1 row). Only flagged rows are returned to the frontend for the review queue and overview charts.
+## CSV export
 
-### Session learning (frontend)
+After analysis, the app generates a cleaned flagged CSV. The exported file focuses on reviewer-friendly columns instead of internal scoring columns.
 
-When a reviewer **dismisses** a flag, the React app records suppression rules for the rest of the session (same merchant, category, or overlapping flag reasons with similar scores). This does not retrain the Python model—it filters and adjusts visibility of remaining flags client-side until a new CSV is uploaded.
+The exported CSV includes columns such as:
 
----
+- transaction_id
+- timestamp
+- card_id
+- amount
+- merchant_name
+- merchant_category
+- channel
+- cardholder_country
+- merchant_country
+- fraud_score
+- risk_level
+- is_flagged
+- flag_reasons
+
+## Project structure
+
+MPCHackathon2026/
+├── backend/
+│   ├── main.py                  # FastAPI app and API endpoints
+│   ├── detector.py              # Legacy compatibility wrapper
+│   ├── requirements.txt         # Python backend dependencies
+│   └── fraud_detection/         # Main fraud detection package
+│       ├── __init__.py          # Package exports
+│       ├── config.py            # Scoring weights, thresholds, profiles
+│       ├── loader.py            # CSV loading and validation
+│       ├── features.py          # Feature engineering and baselines
+│       ├── rules.py             # Fraud signal rules
+│       ├── scorer.py            # Composite fraud score calculation
+│       ├── explain.py           # Human-readable flag explanations
+│       ├── export.py            # Clean CSV export and ranked results
+│       └── main.py              # Pipeline orchestration
+├── docs/
+│   ├── PRD.md
+│   └── IMPLEMENTATION_PLAN.md
+├── public/
+│   └── images/                  # Static UI assets
+├── src/
+│   ├── components/              # Theme toggle, conveyor animation, shared UI
+│   ├── hooks/                   # Frontend hooks
+│   ├── lib/                     # Session learning helpers
+│   ├── pages/                   # Upload, Overview, Review Queue pages
+│   ├── App.tsx                  # Routes and app shell
+│   ├── App.css                  # App-level layout styling
+│   ├── index.css                # Global theme variables
+│   └── main.tsx                 # React entry point
+├── package.json
+├── package-lock.json
+└── README.md
 
 ## How to run
 
 ### Prerequisites
 
-- **Node.js** 18+ and **npm**
-- **Python** 3.10+
+- Node.js 18 or newer
+- npm
+- Python 3.10 or newer
 
 ### Backend
 
-```bash
+From the project root:
+
 cd backend
-
-# Create and activate a virtual environment
 python -m venv .venv
-
-# Windows
-.venv\Scripts\activate
-
-# macOS / Linux
-# source .venv/bin/activate
-
+source .venv/bin/activate
 pip install -r requirements.txt
-
 uvicorn main:app --reload
-```
 
-The API runs at **http://127.0.0.1:8000**.
+The backend runs at:
 
-**Dependencies** (`backend/requirements.txt`):
-
-- `fastapi`
-- `uvicorn`
-- `pandas`
-- `python-multipart`
-
-Optional: run the detector directly on a local CSV:
-
-```bash
-python detector.py
-```
-
-(Ensure `data/transactions.csv` exists relative to `backend/`.)
+http://127.0.0.1:8000
 
 ### Frontend
 
 From the project root:
 
-```bash
 npm install
 npm run dev
-```
 
-The app runs at **http://localhost:5173** (Vite default). The upload page calls `POST http://127.0.0.1:8000/detect-fraud`—start the backend before analyzing a file.
+The frontend runs at:
 
-**Production build:**
+http://localhost:5173
 
-```bash
-npm run build
-npm run preview
-```
+## API endpoints
 
-### CSV format
+| Endpoint | Method | Purpose |
+|---|---|---|
+| /detect-fraud | POST | Uploads CSV and runs fraud detection |
+| /download-flagged-csv | GET | Downloads the cleaned flagged CSV |
 
-The API expects columns including:
+## CSV format
 
-`transaction_id`, `timestamp`, `card_id`, `amount`, `merchant_name`, `merchant_category`, `channel`, `cardholder_country`, `merchant_country`, `device_id`, `ip_address`
+The uploaded CSV should include columns such as:
 
----
+- transaction_id
+- timestamp
+- card_id
+- amount
+- merchant_name
+- merchant_category
+- channel
+- cardholder_country
+- merchant_country
+- device_id
+- ip_address
 
-## Project structure
+## Technologies used
 
-```
-MPCHackathon2026/
-├── backend/
-│   ├── main.py              # FastAPI app & /detect-fraud endpoint
-│   ├── detector.py          # Thin wrapper → fraud_detection
-│   ├── fraud_detection/     # Statistical fraud engine (see table above)
-│   └── requirements.txt
-├── public/images/        # Static assets (review art, conveyor images)
-├── src/
-│   ├── pages/            # Upload, Overview, Review Queue
-│   ├── components/       # Theme toggle, conveyor animation
-│   └── lib/              # Session learning helpers
-└── package.json
-```
-
----
+| Area | Technology |
+|---|---|
+| Frontend | React, TypeScript, Vite |
+| Styling | CSS |
+| Backend | Python, FastAPI |
+| Data processing | Pandas |
+| API communication | Fetch API |
+| Version control | Git and GitHub |
 
 ## Features not implemented
 
-- **Mobile friendliness** — desktop-first UI; full mobile layout was out of scope for the hackathon.
-- **Web optimization (TTI, CLS, Lighthouse)** — no dedicated performance or layout-stability pass.
-- **Novel signal** — additional fraud detection signals were lower priority given time limits; the current rule engine shipped instead.
-
-See [docs/PRD.md](docs/PRD.md) for full product context.
+- Full mobile optimization
+- Advanced machine learning model
+- User authentication
+- Persistent reviewer decisions
+- Database storage
+- Production deployment
 
 ## What we would build next
 
-With just 24 hours, we only had one sunrise till the next sunrise to go from planning to an MVP with a few additional features. If we had one more week to work on the project, we would have added these features:
-
-1. **Optimization** — we would have worked on optimizing our layout, including web performance, Time to Interactive, CLS, loading placeholders, and most importantly, improving our mobile website (in point 3).
-
-2. **Smarter flag detection** — we would have added smarter algorithms to measure/assess fraudulent transactions across all patterns overall in order to reduce the margin of error and frequency of false positives / false negatives.
-
-3. **Mobile friendly** — It would be really nice to have if we imagine shipping an app that is accessible to all devices.
+If we had more time, we would improve mobile responsiveness, add more advanced fraud detection signals, persist reviewer decisions in a database, and add user authentication for fraud analysts.
