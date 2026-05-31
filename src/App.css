@@ -1,8 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text-h);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(0, 111, 255, 0.18), transparent 28%),
+    radial-gradient(circle at 85% 15%, rgba(0, 70, 180, 0.18), transparent 30%),
+    linear-gradient(135deg, #eaf6ff 0%, #d9edff 45%, #c9e4ff 100%);
+}
+
 .app-header {
   min-height: 5.5rem;
   padding: 0 5rem 0 2rem;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
+  background: linear-gradient(135deg, #061b3a 0%, #0b2d66 45%, #0057d9 100%);
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -10,6 +25,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
+  box-shadow: 0 12px 32px rgba(4, 26, 62, 0.22);
 }
 
 .app-header__brand {
@@ -21,6 +37,7 @@
 
 .app-header__icon {
   font-size: 1.6rem;
+  color: white;
 }
 
 .app-header__title {
@@ -28,7 +45,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--text-h);
+  color: white;
 }
 
 .nav {
@@ -39,7 +56,7 @@
 }
 
 .nav a {
-  color: var(--text-h);
+  color: rgba(255, 255, 255, 0.72);
   text-decoration: none;
   font-weight: 700;
   font-size: 0.95rem;
@@ -47,16 +64,16 @@
   letter-spacing: 0.05em;
   padding: 1.9rem 0;
   border-bottom: 4px solid transparent;
-  opacity: 0.7;
+  transition: color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
 }
 
 .nav a:hover {
-  opacity: 1;
+  color: white;
 }
 
 .nav a.active {
-  opacity: 1;
-  border-bottom-color: var(--text-h);
+  color: white;
+  border-bottom-color: #65b7ff;
 }
 
 .theme-toggle {
@@ -73,26 +90,31 @@
   font: inherit;
   font-size: 1.15rem;
   line-height: 1;
-  color: var(--text-h);
-  background: transparent;
-  border: 2px solid var(--text-h);
+  color: white;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.75);
   border-radius: 999px;
   box-shadow: none;
   cursor: pointer;
 }
 
 .theme-toggle:hover {
-  opacity: 0.82;
+  background: rgba(255, 255, 255, 0.16);
 }
 
 .theme-toggle:focus-visible {
-  outline: 2px solid var(--text-h);
+  outline: 2px solid white;
   outline-offset: 2px;
 }
 
 .main {
   flex: 1;
+  min-height: calc(100vh - 5.5rem);
   padding: 4.5rem 1.5rem;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(0, 111, 255, 0.18), transparent 28%),
+    radial-gradient(circle at 85% 15%, rgba(0, 70, 180, 0.18), transparent 30%),
+    linear-gradient(135deg, #eaf6ff 0%, #d9edff 45%, #c9e4ff 100%);
 }
 
 .app-footer {

@@ -25,17 +25,40 @@ function OverviewPage({ analysisResult }: { analysisResult: any }) {
   ]
 
   const riskBreakdown = [
-    { label: 'High Risk', value: analysisResult.high_risk_count },
-    { label: 'Medium Risk', value: analysisResult.medium_risk_count },
-    { label: 'Low Risk', value: analysisResult.low_risk_count },
+    { label: 'High', value: analysisResult.high_risk_count },
+    { label: 'Medium', value: analysisResult.medium_risk_count },
+    { label: 'Low', value: analysisResult.low_risk_count },
   ]
 
   const scoreBuckets = [
-    { label: '50–59', value: transactions.filter((t: any) => t.fraud_score >= 50 && t.fraud_score < 60).length },
-    { label: '60–69', value: transactions.filter((t: any) => t.fraud_score >= 60 && t.fraud_score < 70).length },
-    { label: '70–79', value: transactions.filter((t: any) => t.fraud_score >= 70 && t.fraud_score < 80).length },
-    { label: '80–89', value: transactions.filter((t: any) => t.fraud_score >= 80 && t.fraud_score < 90).length },
-    { label: '90+', value: transactions.filter((t: any) => t.fraud_score >= 90).length },
+    {
+      label: '50–59',
+      value: transactions.filter(
+        (t: any) => t.fraud_score >= 50 && t.fraud_score < 60,
+      ).length,
+    },
+    {
+      label: '60–69',
+      value: transactions.filter(
+        (t: any) => t.fraud_score >= 60 && t.fraud_score < 70,
+      ).length,
+    },
+    {
+      label: '70–79',
+      value: transactions.filter(
+        (t: any) => t.fraud_score >= 70 && t.fraud_score < 80,
+      ).length,
+    },
+    {
+      label: '80–89',
+      value: transactions.filter(
+        (t: any) => t.fraud_score >= 80 && t.fraud_score < 90,
+      ).length,
+    },
+    {
+      label: '90+',
+      value: transactions.filter((t: any) => t.fraud_score >= 90).length,
+    },
   ]
 
   const topSuspicious = [...transactions]
@@ -43,24 +66,28 @@ function OverviewPage({ analysisResult }: { analysisResult: any }) {
     .slice(0, 5)
 
   const categoryCounts: Record<string, number> = transactions.reduce(
-  (acc: Record<string, number>, tx: any) => {
-    const category = tx.merchant_category || 'Unknown'
-    acc[category] = (acc[category] ?? 0) + 1
-    return acc
-  },
-  {},
-)
+    (acc: Record<string, number>, tx: any) => {
+      const category = tx.merchant_category || 'Unknown'
+      acc[category] = (acc[category] ?? 0) + 1
+      return acc
+    },
+    {},
+  )
 
-const fraudByCategory = Object.entries(categoryCounts).map(
-  ([category, value]) => ({
-    category,
-    percent: Math.round((value / Math.max(transactions.length, 1)) * 100),
-  }),
-)
+  const fraudByCategory = Object.entries(categoryCounts).map(
+    ([category, value]) => ({
+      category,
+      value,
+      percent: Math.round((value / Math.max(transactions.length, 1)) * 100),
+    }),
+  )
 
-  const scoreMax = Math.max(...scoreBuckets.map((b) => b.value), 1)
   const riskMax = Math.max(...riskBreakdown.map((r) => r.value), 1)
-  const merchantMax = Math.max(...topSuspicious.map((t: any) => t.fraud_score), 1)
+  const scoreMax = Math.max(...scoreBuckets.map((b) => b.value), 1)
+
+  const categoryOne = fraudByCategory[0]?.percent ?? 0
+  const categoryTwo = fraudByCategory[1]?.percent ?? 0
+  const categoryThree = fraudByCategory[2]?.percent ?? 0
 
   return (
     <section className="overview-page">
@@ -73,6 +100,7 @@ const fraudByCategory = Object.entries(categoryCounts).map(
 
       <section>
         <h2 className="overview-section__title">Summary Cards</h2>
+
         <div className="overview-cards">
           {summaryCards.map((card) => (
             <article key={card.label} className="overview-card">
@@ -88,87 +116,119 @@ const fraudByCategory = Object.entries(categoryCounts).map(
 
         <div className="overview-charts">
           <article className="overview-chart">
-            <h3 className="overview-chart__title">Risk breakdown</h3>
-            <div className="overview-bar-chart overview-bar-chart--horizontal">
+            <h3 className="overview-chart__title">Risk Breakdown</h3>
+
+            <div className="overview-column-chart">
               {riskBreakdown.map((risk) => (
-                <div key={risk.label} className="overview-h-bar">
-                  <span className="overview-h-bar__label">{risk.label}</span>
-                  <div className="overview-h-bar__track">
+                <div key={risk.label} className="overview-column-chart__item">
+                  <div className="overview-column-chart__bar-wrap">
                     <div
-                      className="overview-h-bar__fill"
-                      style={{ width: `${(risk.value / riskMax) * 100}%` }}
+                      className="overview-column-chart__bar"
+                      style={{
+                        height: `${Math.max((risk.value / riskMax) * 100, 4)}%`,
+                      }}
                     />
                   </div>
-                  <span className="overview-h-bar__value">{risk.value}</span>
+
+                  <strong>{risk.value}</strong>
+                  <span>{risk.label}</span>
                 </div>
               ))}
             </div>
           </article>
 
           <article className="overview-chart">
-            <h3 className="overview-chart__title">Fraud score distribution</h3>
-            <div className="overview-bar-chart overview-bar-chart--horizontal">
+            <h3 className="overview-chart__title">Fraud Score Distribution</h3>
+
+            <div className="overview-column-chart overview-column-chart--scores">
               {scoreBuckets.map((bucket) => (
-                <div key={bucket.label} className="overview-h-bar">
-                  <span className="overview-h-bar__label">{bucket.label}</span>
-                  <div className="overview-h-bar__track">
+                <div key={bucket.label} className="overview-column-chart__item">
+                  <div className="overview-column-chart__bar-wrap">
                     <div
-                      className="overview-h-bar__fill"
-                      style={{ width: `${(bucket.value / scoreMax) * 100}%` }}
+                      className="overview-column-chart__bar"
+                      style={{
+                        height: `${Math.max(
+                          (bucket.value / scoreMax) * 100,
+                          bucket.value > 0 ? 8 : 0,
+                        )}%`,
+                      }}
                     />
                   </div>
-                  <span className="overview-h-bar__value">{bucket.value}</span>
+
+                  <strong>{bucket.value}</strong>
+                  <span>{bucket.label}</span>
                 </div>
               ))}
             </div>
           </article>
 
           <article className="overview-chart">
-            <h3 className="overview-chart__title">Top suspicious transactions</h3>
-            <ul className="overview-merchant-list">
-              {topSuspicious.map((tx: any) => (
-                <li key={tx.transaction_id} className="overview-merchant-list__item">
-                  <span className="overview-merchant-list__name">
-                    {tx.transaction_id} · {tx.merchant_name}
-                  </span>
-                  <div className="overview-merchant-list__track">
-                    <div
-                      className="overview-merchant-list__fill"
-                      style={{ width: `${(tx.fraud_score / merchantMax) * 100}%` }}
-                    />
-                  </div>
-                  <span className="overview-merchant-list__score">
-                    {tx.fraud_score}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <h3 className="overview-chart__title">Top Suspicious Transactions</h3>
+
+            <table className="overview-mini-table">
+              <thead>
+                <tr>
+                  <th>Transaction</th>
+                  <th>Merchant</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {topSuspicious.map((tx: any) => (
+                  <tr key={tx.transaction_id}>
+                    <td>{tx.transaction_id}</td>
+                    <td>{tx.merchant_name}</td>
+                    <td>
+                      <span className="overview-score-pill">
+                        {tx.fraud_score}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </article>
 
           <article className="overview-chart">
-            <h3 className="overview-chart__title">Flagged by category</h3>
-            <ul className="overview-category-list">
-              {fraudByCategory.map((item) => (
-                <li key={item.category} className="overview-category-list__item">
-                  <div className="overview-category-list__row">
+            <h3 className="overview-chart__title">Flagged by Category</h3>
+
+            <div className="overview-pie-layout">
+              <div
+                className="overview-pie"
+                style={{
+                  background: `conic-gradient(
+                    #0057d9 0% ${categoryOne}%,
+                    #3b82f6 ${categoryOne}% ${categoryOne + categoryTwo}%,
+                    #93c5fd ${categoryOne + categoryTwo}% ${
+                      categoryOne + categoryTwo + categoryThree
+                    }%,
+                    #dbeafe ${categoryOne + categoryTwo + categoryThree}% 100%
+                  )`,
+                }}
+              >
+                <div className="overview-pie__center">
+                  {transactions.length}
+                  <span>flagged</span>
+                </div>
+              </div>
+
+              <ul className="overview-pie-legend">
+                {fraudByCategory.map((item) => (
+                  <li key={item.category}>
                     <span>{item.category}</span>
-                    <span>{item.percent}%</span>
-                  </div>
-                  <div className="overview-category-list__track">
-                    <div
-                      className="overview-category-list__fill"
-                      style={{ width: `${item.percent}%` }}
-                    />
-                  </div>
-                </li>
-              ))}
-            </ul>
+                    <strong>{item.percent}%</strong>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </article>
         </div>
       </section>
 
       <section>
         <h2 className="overview-section__title">Recent Alerts</h2>
+
         <div className="overview-table-wrap">
           <table className="overview-table">
             <thead>
@@ -178,6 +238,7 @@ const fraudByCategory = Object.entries(categoryCounts).map(
                 <th>Reason</th>
               </tr>
             </thead>
+
             <tbody>
               {topSuspicious.map((tx: any) => (
                 <tr key={tx.transaction_id}>
