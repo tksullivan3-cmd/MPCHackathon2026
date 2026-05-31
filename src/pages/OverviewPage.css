@@ -85,8 +85,8 @@
 .overview-chart__title {
   margin: 0 0 1rem;
   font-size: 1rem;
-  font-weight: 500;
-  color: var(--text-h);
+  font-weight: 600;
+  color: var(--chart-header);
 }
 
 .overview-bar-chart {
@@ -383,7 +383,7 @@
 }
 
 .overview-mini-table th {
-  color: var(--blue-900, #0b2d66);
+  color: var(--chart-header);
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
