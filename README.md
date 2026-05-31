@@ -34,7 +34,19 @@ Dismissals teach the system **within the current session**: thresholds tighten s
 
 ## Flag detection strategy
 
-The backend (`backend/detector.py`) uses a **composite fraud score** built from several independent signals. Each transaction receives a numeric score, a risk label, and human-readable reasons.
+The backend module (`backend/fraud_detection/`) uses a **deterministic, rule-based** composite fraud score (no ML). Each transaction receives a score **0–100**, `is_flagged` (default threshold **60**), `risk_level`, and human-readable `flag_reasons`.
+
+| Module | Role |
+|--------|------|
+| `loader.py` | CSV ingest + validation |
+| `features.py` | Statistical features (amount, velocity, merchant, geo, device/IP) |
+| `rules.py` | Anomaly signals (thresholds) |
+| `scorer.py` | Weighted score → 0–100 |
+| `explain.py` | Human-readable bullets (1–5 per flag) |
+| `export.py` | Enriched CSV + ranked output |
+| `config.py` | Weights, thresholds, `strict` / `balanced` / `lenient` |
+
+Legacy import: `from detector import detect_fraud` still works.
 
 ### Per-card baselines
 
@@ -65,7 +77,7 @@ Scores from all signals are summed into `fraud_score`.
 
 ### Flagging policy
 
-After scoring, the engine flags the **top 7%** of transactions by `fraud_score` (at least one row). Only flagged rows are returned to the frontend for the review queue and overview charts.
+Transactions with `fraud_score >= 60` (configurable; presets: strict 50, balanced 60, lenient 70) are flagged. Only flagged rows are returned to the frontend for the review queue and overview charts.
 
 ### Session learning (frontend)
 
@@ -147,8 +159,9 @@ The API expects columns including:
 ```
 MPCHackathon2026/
 ├── backend/
-│   ├── main.py           # FastAPI app & /detect-fraud endpoint
-│   ├── detector.py       # Fraud scoring & flagging logic
+│   ├── main.py              # FastAPI app & /detect-fraud endpoint
+│   ├── detector.py          # Thin wrapper → fraud_detection
+│   ├── fraud_detection/     # Statistical fraud engine (see table above)
 │   └── requirements.txt
 ├── public/images/        # Static assets (review art, conveyor images)
 ├── src/
