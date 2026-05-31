@@ -160,6 +160,14 @@ MPCHackathon2026/
 
 ---
 
+## Features not implemented
+
+- **Mobile friendliness** — desktop-first UI; full mobile layout was out of scope for the hackathon.
+- **Web optimization (TTI, CLS, Lighthouse)** — no dedicated performance or layout-stability pass.
+- **Novel signal** — additional fraud detection signals were lower priority given time limits; the current rule engine shipped instead.
+
+See [docs/PRD.md](docs/PRD.md) for full product context.
+
 ## What we would build next
 
 With just 24 hours, we only had one sunrise till the next sunrise to go from planning to an MVP with a few additional features. If we had one more week to work on the project, we would have added these features:

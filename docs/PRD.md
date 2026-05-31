@@ -141,13 +141,27 @@ Manual review of large transaction files is slow and inconsistent. Rules-only sy
 
 ---
 
-## 9. Future work (post-MVP)
+## 9. Features not implemented
+
+The following were planned or discussed but **not shipped** in the MVP due to the 24-hour hackathon scope:
+
+| Feature | Notes |
+|---------|--------|
+| **Mobile friendliness** | UI is desktop-first with only partial responsive breakpoints. A full mobile layout (touch targets, stacked charts, review queue on small screens) was deferred. |
+| **Web optimization (TTI, CLS, Lighthouse)** | No dedicated pass on Time to Interactive, Cumulative Layout Shift, loading placeholders, code splitting, or Lighthouse-driven performance work. |
+| **Novel signal** | Additional detection signals beyond the current rule set were a lower priority. With limited time, the team focused on the existing composite scorer; new signals could be added with more engineering time. |
+
+See also **§10 Future work** and the README “What we would build next” section.
+
+---
+
+## 10. Future work (post-MVP)
 
 Documented separately in README: performance/mobile optimization, smarter detection (fewer FP/FN), full mobile experience, wired export/audit, persistent learning, auth, and production hardening.
 
 ---
 
-## 10. Open questions (deferred)
+## 11. Open questions (deferred)
 
 - Should Escalate write to a backend case store? (Not in MVP.)  
 - Should Approve/Dismiss persist after refresh? (Not in MVP.)  

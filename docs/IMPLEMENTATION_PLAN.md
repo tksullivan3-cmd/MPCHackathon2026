@@ -107,6 +107,12 @@
 | CI/CD & production hosting | Local run documented in README |
 | WebSocket / streaming | Batch upload only |
 
+### Features not implemented
+
+- **Mobile friendliness** — not a focused deliverable; layout remains desktop-first.  
+- **Web optimization (TTI, CLS, Lighthouse)** — no performance audit, skeleton loaders, or bundle optimization pass.  
+- **Novel signal** — extra fraud signals beyond `detector.py`’s current set were deprioritized; feasible with more time but out of scope for the sprint.
+
 ---
 
 ## 7. Risks and mitigations (hackathon)
