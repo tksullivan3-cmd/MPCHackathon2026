@@ -6,6 +6,32 @@ function isCsvFile(file: File): boolean {
   return file.name.toLowerCase().endsWith('.csv')
 }
 
+function UploadIcon() {
+  return (
+    <svg
+      className="file-upload__icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M12 16V4m0 0l-4 4m4-4l4 4"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
 function getFlaggedRiskCounts(result: {
   transactions?: Array<{ risk_level?: string; fraud_score?: number }>
   high_risk_count?: number
@@ -116,20 +142,35 @@ function UploadCsvPage({
         <div className="upload-box">
           <h2>Upload File</h2>
 
-          <label htmlFor="csv-file" className="file-label">
-            Choose transactions.csv
-          </label>
-
-          <input
-            id="csv-file"
-            type="file"
-            accept=".csv,text/csv"
-            onChange={handleFileChange}
-          />
+          <div
+            className={`file-upload${selectedFile ? ' file-upload--has-file' : ''}`}
+          >
+            <input
+              id="csv-file"
+              className="file-upload__input"
+              type="file"
+              accept=".csv,text/csv"
+              onChange={handleFileChange}
+            />
+            <label htmlFor="csv-file" className="file-upload__button">
+              <UploadIcon />
+              {selectedFile ? (
+                <span className="file-upload__title">{selectedFile.name}</span>
+              ) : (
+                <span className="file-upload__title-group">
+                  <span className="file-upload__title">Choose CSV file</span>
+                  <span className="file-upload__filename">transactions.csv</span>
+                </span>
+              )}
+              <span className="file-upload__hint">
+                {selectedFile
+                  ? 'Click to replace file'
+                  : 'Click to browse · .csv only'}
+              </span>
+            </label>
+          </div>
 
           <ConveyorAnimation key="upload-box-conveyor" />
-
-          {selectedFile && <p className="file-name">{selectedFile.name}</p>}
           {fileError && <p className="error">{fileError}</p>}
           {uploadError && <p className="error">{uploadError}</p>}
 
