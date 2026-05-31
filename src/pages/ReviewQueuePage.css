@@ -150,7 +150,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--blue-900, #0b2d66);
+  color: var(--chart-header, var(--text-h));
 }
 
 .review-filter input,
@@ -160,15 +160,27 @@
   padding: 0.55rem 0.75rem;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--surface-muted);
+  background: var(--code-bg);
   color: var(--text-h);
   font: inherit;
   font-size: 0.85rem;
   box-sizing: border-box;
+  color-scheme: light dark;
 }
 
 .review-filter input::placeholder {
-  color: rgba(34, 48, 68, 0.6);
+  color: color-mix(in srgb, var(--text) 55%, transparent);
+}
+
+[data-theme='dark'] .review-filter input,
+[data-theme='dark'] .review-filter select {
+  background: var(--surface-muted);
+  color: var(--text-h);
+}
+
+[data-theme='dark'] .review-filter select option {
+  background: var(--surface-muted);
+  color: var(--text-h);
 }
 
 .review-filter input:focus,
