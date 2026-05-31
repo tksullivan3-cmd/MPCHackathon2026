@@ -48,9 +48,9 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p className="app-footer__name">Fruad Hunter</p>
+        <p className="app-footer__name">Fraud Hunter</p>
         <p className="app-footer__copyright">
-          © {new Date().getFullYear()} Fruad Hunter
+          © {new Date().getFullYear()} Fraud Hunter
         </p>
       </footer>
     </>

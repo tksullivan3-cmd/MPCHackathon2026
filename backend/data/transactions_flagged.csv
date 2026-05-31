@@ -47,7 +47,7 @@ tx_000316,2026-04-26 12:12:06,card_017,22.57,Starbucks,restaurant,in_person,CA,C
 tx_000743,2026-04-26 12:28:08,card_040,91.1,Tim Hortons,restaurant,in_person,CA,CA,,,10,low,Amount is 4.5x this card's median,0,,0,,0,,False
 tx_000849,2026-04-26 12:40:31,card_045,20.83,QuickPay Online,online_retail,online,FR,CA,dev_ba413b67,90.5.136.131,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000680,2026-04-26 12:47:39,card_036,20.0,Desjardins ATM,atm,atm,CA,CA,,,10,low,ATM transaction,0,,0,,0,,False
-tx_000770,2026-04-26 13:04:38,card_041,374.46,Petro-Canada,gas,in_person,CA,CA,,,35,low,Amount is 14.6x this card's median,0,,0,,0,,False
+tx_000770,2026-04-26 13:04:38,card_041,374.46,Petro-Canada,gas,in_person,CA,CA,,,35,low,Amount is 14.6x this card's median,0,,0,,0,,True
 tx_000406,2026-04-26 13:57:43,card_021,35.82,Metro,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000848,2026-04-26 14:56:02,card_045,60.0,RBC ATM,atm,atm,FR,FR,,,10,low,ATM transaction,0,,0,,0,,False
 tx_000319,2026-04-26 17:26:44,card_017,80.0,Desjardins ATM,atm,atm,CA,CA,,,20,low,Amount is 3.7x this card's median; ATM transaction,0,,0,,0,,False
@@ -98,7 +98,7 @@ tx_000355,2026-04-28 06:46:21,card_019,19.99,Spotify,subscription,online,CA,SE,d
 tx_000132,2026-04-28 08:49:10,card_007,37.6,Petro-Canada,gas,in_person,US,US,,,0,low,,0,,0,,0,,False
 tx_000101,2026-04-28 10:08:24,card_005,6.11,Loblaws,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000487,2026-04-28 10:15:04,card_026,36.55,Chipotle,restaurant,in_person,US,US,,,0,low,,0,,0,,0,,False
-tx_000259,2026-04-28 10:18:21,card_013,201.67,AliExpress,online_retail,online,CA,CN,dev_e5c2222f,99.225.179.199,25,low,Amount is 4.2x this card's median; Merchant country differs from cardholder country,0,,0,,0,,False
+tx_000259,2026-04-28 10:18:21,card_013,201.67,AliExpress,online_retail,online,CA,CN,dev_e5c2222f,99.225.179.199,25,low,Amount is 4.2x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
 tx_000385,2026-04-28 11:12:53,card_020,5.57,McDonald's,restaurant,in_person,US,US,,,0,low,,0,,0,,0,,False
 tx_000916,2026-04-28 12:10:09,card_049,60.0,Desjardins ATM,atm,atm,CA,CA,,,20,low,Amount is 3.8x this card's median; ATM transaction,0,,0,,0,,False
 tx_000448,2026-04-28 13:18:04,card_024,37.51,Whole Foods,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
@@ -118,7 +118,7 @@ tx_000711,2026-04-28 22:32:05,card_038,21.29,Cafe Olimpico,restaurant,in_person,
 tx_000372,2026-04-28 23:03:12,card_020,9.99,Netflix,subscription,online,US,US,dev_2877f7d9,172.58.160.30,0,low,,0,,0,,0,,False
 tx_000497,2026-04-28 23:56:17,card_027,40.0,RBC ATM,atm,atm,CA,CA,,,10,low,ATM transaction,0,,0,,0,,False
 tx_000580,2026-04-29 00:22:12,card_031,67.56,Starbucks,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
-tx_000651,2026-04-29 02:03:45,card_035,71.19,AliExpress,online_retail,online,CA,CN,dev_37f4b88c,142.112.106.173,25,low,Amount is 3.4x this card's median; Merchant country differs from cardholder country,0,,0,,0,,False
+tx_000651,2026-04-29 02:03:45,card_035,71.19,AliExpress,online_retail,online,CA,CN,dev_37f4b88c,142.112.106.173,25,low,Amount is 3.4x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
 tx_000731,2026-04-29 05:10:34,card_039,38.44,Bell Canada,utilities,online,GB,CA,dev_2ab5d40f,86.150.180.238,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000186,2026-04-29 05:37:32,card_010,25.36,McDonald's,restaurant,in_person,US,US,,,0,low,,0,,0,,0,,False
 tx_000142,2026-04-29 06:00:23,card_007,54.22,Videotron,utilities,online,US,CA,dev_5d017d53,73.15.74.87,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
@@ -130,7 +130,7 @@ tx_000799,2026-04-29 09:34:00,card_042,33.17,Schwartz's,restaurant,in_person,US,
 tx_000416,2026-04-29 11:27:14,card_022,86.33,Schwartz's,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000573,2026-04-29 11:33:07,card_031,33.81,IGA,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000538,2026-04-29 13:32:11,card_029,80.0,Desjardins ATM,atm,atm,CA,CA,,,10,low,ATM transaction,0,,0,,0,,False
-tx_000321,2026-04-29 13:47:48,card_017,200.0,RBC ATM,atm,atm,CA,CA,,,30,low,Amount is 9.2x this card's median; ATM transaction,0,,0,,0,,False
+tx_000321,2026-04-29 13:47:48,card_017,200.0,RBC ATM,atm,atm,CA,CA,,,30,low,Amount is 9.2x this card's median; ATM transaction,0,,0,,0,,True
 tx_000066,2026-04-29 13:48:16,card_003,53.66,Amazon.ca,online_retail,online,CA,CA,dev_d52ac3b8,99.225.198.65,0,low,,0,,0,,0,,False
 tx_000520,2026-04-29 16:27:07,card_028,200.0,BMO ATM,atm,atm,CA,CA,,,20,low,Amount is 3.4x this card's median; ATM transaction,0,,0,,0,,False
 tx_000068,2026-04-29 16:39:06,card_003,13.99,Netflix,subscription,online,CA,US,dev_6fdbe52d,24.114.189.137,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
@@ -163,7 +163,7 @@ tx_000513,2026-04-30 07:20:40,card_027,26.97,Starbucks,restaurant,in_person,CA,C
 tx_000855,2026-04-30 07:29:19,card_046,19.99,Disney+,subscription,online,CA,US,dev_1abbf8e4,24.114.156.20,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000161,2026-04-30 08:05:43,card_008,86.69,Esso,gas,in_person,CA,CA,,,10,low,Amount is 3.4x this card's median,0,,0,,0,,False
 tx_000135,2026-04-30 08:21:18,card_007,46.88,Loblaws,grocery,in_person,US,US,,,0,low,,0,,0,,0,,False
-tx_000188,2026-04-30 09:30:03,card_010,200.0,BMO ATM,atm,atm,US,US,,,30,low,Amount is 7.2x this card's median; ATM transaction,0,,0,,0,,False
+tx_000188,2026-04-30 09:30:03,card_010,200.0,BMO ATM,atm,atm,US,US,,,30,low,Amount is 7.2x this card's median; ATM transaction,0,,0,,0,,True
 tx_000865,2026-04-30 10:50:59,card_046,11.99,Disney+,subscription,online,CA,US,dev_b8fe1cb0,142.112.82.124,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000753,2026-04-30 11:05:20,card_040,22.28,Petro-Canada,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000374,2026-04-30 11:14:21,card_020,13.53,Shopify Merchant 2,online_retail,online,US,CA,dev_2877f7d9,98.207.22.39,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
@@ -255,12 +255,12 @@ tx_000716,2026-05-03 09:45:08,card_038,30.75,Tim Hortons,restaurant,in_person,CA
 tx_000949,2026-05-03 10:58:00,card_042,1.4,Shopify Merchant 2,online_retail,online,US,CA,dev_c4fb137f,201.116.232.148,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000950,2026-05-03 11:01:01,card_042,4.48,AliExpress,online_retail,online,US,CN,dev_c4fb137f,201.116.232.148,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000951,2026-05-03 11:01:34,card_042,5.04,Shopify Merchant 1,online_retail,online,US,CA,dev_c4fb137f,201.116.232.148,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
-tx_000953,2026-05-03 11:05:30,card_042,14.38,AliExpress,online_retail,online,US,CN,dev_c4fb137f,201.116.232.148,45,low,Merchant country differs from cardholder country; 4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,False
-tx_000952,2026-05-03 11:07:39,card_042,7.46,AliExpress,online_retail,online,US,CN,dev_c4fb137f,201.116.232.148,45,low,Merchant country differs from cardholder country; 5 transactions on same card within 10 minutes,30,5 transactions on same card within 10 minutes,0,,0,,False
-tx_000955,2026-05-03 11:11:22,card_042,4.36,Shopify Merchant 1,online_retail,online,US,CA,dev_c4fb137f,201.116.232.148,45,low,Merchant country differs from cardholder country; 4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,False
-tx_000954,2026-05-03 11:15:14,card_042,14.27,QuickPay Online,online_retail,online,US,CA,dev_c4fb137f,201.116.232.148,45,low,Merchant country differs from cardholder country; 4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,False
+tx_000953,2026-05-03 11:05:30,card_042,14.38,AliExpress,online_retail,online,US,CN,dev_c4fb137f,201.116.232.148,45,low,Merchant country differs from cardholder country; 4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,True
+tx_000952,2026-05-03 11:07:39,card_042,7.46,AliExpress,online_retail,online,US,CN,dev_c4fb137f,201.116.232.148,45,low,Merchant country differs from cardholder country; 5 transactions on same card within 10 minutes,30,5 transactions on same card within 10 minutes,0,,0,,True
+tx_000955,2026-05-03 11:11:22,card_042,4.36,Shopify Merchant 1,online_retail,online,US,CA,dev_c4fb137f,201.116.232.148,45,low,Merchant country differs from cardholder country; 4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,True
+tx_000954,2026-05-03 11:15:14,card_042,14.27,QuickPay Online,online_retail,online,US,CA,dev_c4fb137f,201.116.232.148,45,low,Merchant country differs from cardholder country; 4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,True
 tx_000956,2026-05-03 11:20:20,card_042,2.97,Shopify Merchant 2,online_retail,online,US,CA,dev_c4fb137f,201.116.232.148,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
-tx_000356,2026-05-03 12:36:53,card_019,497.46,Loblaws,grocery,in_person,CA,CA,,,35,low,Amount is 15.5x this card's median,0,,0,,0,,False
+tx_000356,2026-05-03 12:36:53,card_019,497.46,Loblaws,grocery,in_person,CA,CA,,,35,low,Amount is 15.5x this card's median,0,,0,,0,,True
 tx_000761,2026-05-03 12:38:15,card_041,43.26,Cineplex,entertainment,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000170,2026-05-03 13:56:49,card_009,6.47,Shopify Merchant 1,online_retail,online,US,CA,dev_b62b3697,98.207.109.62,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000116,2026-05-03 13:57:37,card_006,55.3,Shopify Merchant 2,online_retail,online,CA,CA,dev_1321b774,142.112.229.228,0,low,,0,,0,,0,,False
@@ -291,7 +291,7 @@ tx_000607,2026-05-04 04:38:53,card_033,21.86,Chevron,gas,in_person,GB,GB,,,0,low
 tx_000453,2026-05-04 04:40:55,card_024,27.68,Shell,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000126,2026-05-04 05:57:01,card_007,26.77,Shell,gas,in_person,US,US,,,0,low,,0,,0,,0,,False
 tx_000644,2026-05-04 07:36:18,card_034,8.99,Amazon.ca,online_retail,online,CA,CA,dev_a0256e48,70.50.216.172,0,low,,0,,0,,0,,False
-tx_000353,2026-05-04 08:25:24,card_019,256.48,AliExpress,online_retail,online,CA,CN,dev_95204a30,142.112.208.235,35,low,Amount is 8.0x this card's median; Merchant country differs from cardholder country,0,,0,,0,,False
+tx_000353,2026-05-04 08:25:24,card_019,256.48,AliExpress,online_retail,online,CA,CN,dev_95204a30,142.112.208.235,35,low,Amount is 8.0x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
 tx_000425,2026-05-04 08:31:37,card_022,9.27,Loblaws,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000203,2026-05-04 09:24:00,card_010,4.52,Cafe Olimpico,restaurant,in_person,US,US,,,0,low,,0,,0,,0,,False
 tx_000809,2026-05-04 09:33:39,card_043,33.82,eBay,online_retail,online,CA,US,dev_c832252e,142.112.179.153,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
@@ -309,7 +309,7 @@ tx_000408,2026-05-04 17:57:28,card_021,21.7,Starbucks,restaurant,in_person,CA,CA
 tx_000244,2026-05-04 17:59:57,card_012,31.96,AliExpress,online_retail,online,CA,CN,dev_08e633ee,24.114.30.254,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000884,2026-05-04 18:21:08,card_047,6.52,Shopify Merchant 2,online_retail,online,CA,CA,dev_dcad83da,142.112.118.157,0,low,,0,,0,,0,,False
 tx_000137,2026-05-04 19:00:19,card_007,8.81,Loblaws,grocery,in_person,US,US,,,0,low,,0,,0,,0,,False
-tx_000903,2026-05-04 21:08:19,card_049,100.0,RBC ATM,atm,atm,CA,CA,,,30,low,Amount is 6.3x this card's median; ATM transaction,0,,0,,0,,False
+tx_000903,2026-05-04 21:08:19,card_049,100.0,RBC ATM,atm,atm,CA,CA,,,30,low,Amount is 6.3x this card's median; ATM transaction,0,,0,,0,,True
 tx_000714,2026-05-04 21:40:13,card_038,20.28,Metro,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000682,2026-05-04 23:53:17,card_037,29.52,Schwartz's,restaurant,in_person,GB,GB,,,0,low,,0,,0,,0,,False
 tx_000213,2026-05-04 23:53:57,card_011,21.39,Schwartz's,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
@@ -317,15 +317,15 @@ tx_000381,2026-05-04 23:58:10,card_020,40.67,Shopify Merchant 2,online_retail,on
 tx_000512,2026-05-05 00:18:16,card_027,33.83,Petro-Canada,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000078,2026-05-05 01:40:25,card_004,40.0,Desjardins ATM,atm,atm,CA,CA,,,10,low,ATM transaction,0,,0,,0,,False
 tx_000358,2026-05-05 02:09:00,card_019,112.72,Loblaws,grocery,in_person,CA,CA,,,10,low,Amount is 3.5x this card's median,0,,0,,0,,False
-tx_000996,2026-05-05 02:15:14,card_032,791.49,QuickPay Online,online_retail,online,CA,CA,dev_732bff0c,98.207.131.10,35,low,Amount is 13.7x this card's median,0,,0,,0,,False
+tx_000996,2026-05-05 02:15:14,card_032,791.49,QuickPay Online,online_retail,online,CA,CA,dev_732bff0c,98.207.131.10,35,low,Amount is 13.7x this card's median,0,,0,,0,,True
 tx_001000,2026-05-05 02:19:23,card_037,399.49,QuickPay Online,online_retail,online,CA,CA,dev_ab552458,98.207.55.146,20,low,Amount is 7.6x this card's median,0,,0,,0,,False
-tx_000995,2026-05-05 02:25:59,card_002,735.44,QuickPay Online,online_retail,online,CA,CA,dev_a89efa00,172.58.196.128,35,low,Amount is 36.8x this card's median,0,,0,,0,,False
-tx_000997,2026-05-05 02:45:19,card_038,356.29,QuickPay Online,online_retail,online,CA,CA,dev_9a5131ce,98.207.247.39,35,low,Amount is 23.8x this card's median,0,,0,,0,,False
+tx_000995,2026-05-05 02:25:59,card_002,735.44,QuickPay Online,online_retail,online,CA,CA,dev_a89efa00,172.58.196.128,35,low,Amount is 36.8x this card's median,0,,0,,0,,True
+tx_000997,2026-05-05 02:45:19,card_038,356.29,QuickPay Online,online_retail,online,CA,CA,dev_9a5131ce,98.207.247.39,35,low,Amount is 23.8x this card's median,0,,0,,0,,True
 tx_000475,2026-05-05 02:55:58,card_025,20.0,BMO ATM,atm,atm,CA,CA,,,10,low,ATM transaction,0,,0,,0,,False
 tx_000368,2026-05-05 03:06:34,card_020,13.99,Spotify,subscription,online,US,SE,dev_2877f7d9,73.15.168.176,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000699,2026-05-05 03:19:21,card_037,111.31,Videotron,utilities,online,GB,CA,dev_9abdb3fd,151.225.172.215,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000999,2026-05-05 03:22:40,card_039,370.5,QuickPay Online,online_retail,online,GB,CA,dev_b4734afd,98.207.23.36,50,medium,Amount is 20.3x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
-tx_000998,2026-05-05 03:27:16,card_046,935.27,QuickPay Online,online_retail,online,CA,CA,dev_89fb9c62,208.54.251.27,35,low,Amount is 27.1x this card's median,0,,0,,0,,False
+tx_000998,2026-05-05 03:27:16,card_046,935.27,QuickPay Online,online_retail,online,CA,CA,dev_89fb9c62,208.54.251.27,35,low,Amount is 27.1x this card's median,0,,0,,0,,True
 tx_000677,2026-05-05 04:14:10,card_036,32.19,Chevron,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000613,2026-05-05 04:33:52,card_033,220.46,Chipotle,restaurant,in_person,GB,GB,,,10,low,Amount is 3.5x this card's median,0,,0,,0,,False
 tx_000530,2026-05-05 06:05:49,card_028,75.54,Shell,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
@@ -354,7 +354,7 @@ tx_000415,2026-05-06 02:05:06,card_022,36.93,Joe Beef,restaurant,in_person,CA,CA
 tx_000882,2026-05-06 02:56:36,card_047,16.52,Shopify Merchant 1,online_retail,online,CA,CA,dev_dcad83da,99.225.114.61,0,low,,0,,0,,0,,False
 tx_000220,2026-05-06 05:58:35,card_011,64.44,Hydro-Quebec,utilities,online,CA,CA,dev_7b8b43cb,24.114.36.254,20,low,Amount is 6.2x this card's median,0,,0,,0,,False
 tx_000327,2026-05-06 06:37:29,card_017,82.19,Videotron,utilities,online,CA,CA,dev_d0ff1fad,99.225.32.76,10,low,Amount is 3.8x this card's median,0,,0,,0,,False
-tx_000851,2026-05-06 07:13:22,card_045,200.0,Desjardins ATM,atm,atm,FR,FR,,,30,low,Amount is 6.6x this card's median; ATM transaction,0,,0,,0,,False
+tx_000851,2026-05-06 07:13:22,card_045,200.0,Desjardins ATM,atm,atm,FR,FR,,,30,low,Amount is 6.6x this card's median; ATM transaction,0,,0,,0,,True
 tx_000638,2026-05-06 08:38:00,card_034,20.99,Videotron,utilities,online,CA,CA,dev_a0256e48,70.50.145.49,0,low,,0,,0,,0,,False
 tx_000801,2026-05-06 09:16:33,card_043,12.13,Videotron,utilities,online,CA,CA,dev_c832252e,99.225.12.214,0,low,,0,,0,,0,,False
 tx_000376,2026-05-06 09:38:43,card_020,21.83,Amazon.com,online_retail,online,US,US,dev_2877f7d9,208.54.151.43,0,low,,0,,0,,0,,False
@@ -429,7 +429,7 @@ tx_000343,2026-05-08 21:26:55,card_018,41.8,Cafe Olimpico,restaurant,in_person,C
 tx_000631,2026-05-08 22:43:04,card_034,7.31,Chevron,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000384,2026-05-08 23:13:27,card_020,44.39,QuickPay Online,online_retail,online,US,CA,dev_2877f7d9,73.15.30.41,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000481,2026-05-08 23:23:17,card_026,41.42,Petro-Canada,gas,in_person,US,US,,,0,low,,0,,0,,0,,False
-tx_000472,2026-05-08 23:54:10,card_025,200.0,Desjardins ATM,atm,atm,CA,CA,,,30,low,Amount is 7.7x this card's median; ATM transaction,0,,0,,0,,False
+tx_000472,2026-05-08 23:54:10,card_025,200.0,Desjardins ATM,atm,atm,CA,CA,,,30,low,Amount is 7.7x this card's median; ATM transaction,0,,0,,0,,True
 tx_000876,2026-05-09 00:51:56,card_047,14.73,Amazon.com,online_retail,online,CA,US,dev_dcad83da,24.114.137.39,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000100,2026-05-09 01:16:46,card_005,15.01,Joe Beef,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000392,2026-05-09 02:23:08,card_021,58.55,Tim Hortons,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
@@ -456,7 +456,7 @@ tx_000825,2026-05-09 16:55:37,card_044,40.0,BMO ATM,atm,atm,GB,GB,,,10,low,ATM t
 tx_000676,2026-05-09 17:29:19,card_036,28.46,Chevron,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000633,2026-05-09 17:34:09,card_034,12.76,Amazon.com,online_retail,online,CA,US,dev_a9c78771,99.225.148.97,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000893,2026-05-09 18:22:48,card_048,27.06,Etsy,online_retail,online,CA,US,dev_3bbcb503,70.50.153.50,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
-tx_000774,2026-05-09 18:41:55,card_041,471.21,Schwartz's,restaurant,in_person,CA,CA,,,35,low,Amount is 18.3x this card's median,0,,0,,0,,False
+tx_000774,2026-05-09 18:41:55,card_041,471.21,Schwartz's,restaurant,in_person,CA,CA,,,35,low,Amount is 18.3x this card's median,0,,0,,0,,True
 tx_000258,2026-05-09 19:16:53,card_013,56.3,Shell,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000055,2026-05-09 19:30:09,card_003,33.11,Loblaws,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000740,2026-05-09 20:11:49,card_040,170.53,Cineplex,entertainment,in_person,CA,CA,,,20,low,Amount is 8.5x this card's median,0,,0,,0,,False
@@ -476,7 +476,7 @@ tx_000457,2026-05-10 10:15:45,card_024,34.48,Metro,grocery,in_person,CA,CA,,,0,l
 tx_000778,2026-05-10 12:05:43,card_041,69.94,Tim Hortons,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000278,2026-05-10 12:53:45,card_015,46.65,Starbucks,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000674,2026-05-10 13:08:32,card_036,200.0,RBC ATM,atm,atm,CA,CA,,,20,low,Amount is 4.0x this card's median; ATM transaction,0,,0,,0,,False
-tx_000766,2026-05-10 14:54:25,card_041,475.35,Cineplex,entertainment,in_person,CA,CA,,,35,low,Amount is 18.5x this card's median,0,,0,,0,,False
+tx_000766,2026-05-10 14:54:25,card_041,475.35,Cineplex,entertainment,in_person,CA,CA,,,35,low,Amount is 18.5x this card's median,0,,0,,0,,True
 tx_000869,2026-05-10 16:42:02,card_046,56.29,Chipotle,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000757,2026-05-10 17:34:59,card_040,5.95,Shell,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000012,2026-05-10 18:09:35,card_000,19.81,Cafe Olimpico,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
@@ -503,13 +503,13 @@ tx_000212,2026-05-11 12:47:36,card_011,8.71,Joe Beef,restaurant,in_person,CA,CA,
 tx_000968,2026-05-11 13:46:00,card_038,11.21,Shopify Merchant 1,online_retail,online,CA,CA,dev_52f96bdf,208.54.80.124,0,low,,0,,0,,0,,False
 tx_000969,2026-05-11 13:49:16,card_038,4.68,AliExpress,online_retail,online,CA,CN,dev_52f96bdf,208.54.80.124,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000970,2026-05-11 13:52:42,card_038,5.72,Shopify Merchant 1,online_retail,online,CA,CA,dev_52f96bdf,208.54.80.124,0,low,,0,,0,,0,,False
-tx_000977,2026-05-11 13:53:16,card_038,5.39,Shopify Merchant 2,online_retail,online,CA,CA,dev_52f96bdf,208.54.80.124,30,low,4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,False
-tx_000971,2026-05-11 13:53:38,card_038,3.64,Shopify Merchant 1,online_retail,online,CA,CA,dev_52f96bdf,208.54.80.124,30,low,5 transactions on same card within 10 minutes,30,5 transactions on same card within 10 minutes,0,,0,,False
-tx_000972,2026-05-11 13:56:05,card_038,11.41,Shopify Merchant 1,online_retail,online,CA,CA,dev_52f96bdf,208.54.80.124,30,low,5 transactions on same card within 10 minutes,30,5 transactions on same card within 10 minutes,0,,0,,False
-tx_000973,2026-05-11 14:00:25,card_038,2.7,Shopify Merchant 2,online_retail,online,CA,CA,dev_52f96bdf,208.54.80.124,30,low,5 transactions on same card within 10 minutes,30,5 transactions on same card within 10 minutes,0,,0,,False
+tx_000977,2026-05-11 13:53:16,card_038,5.39,Shopify Merchant 2,online_retail,online,CA,CA,dev_52f96bdf,208.54.80.124,30,low,4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,True
+tx_000971,2026-05-11 13:53:38,card_038,3.64,Shopify Merchant 1,online_retail,online,CA,CA,dev_52f96bdf,208.54.80.124,30,low,5 transactions on same card within 10 minutes,30,5 transactions on same card within 10 minutes,0,,0,,True
+tx_000972,2026-05-11 13:56:05,card_038,11.41,Shopify Merchant 1,online_retail,online,CA,CA,dev_52f96bdf,208.54.80.124,30,low,5 transactions on same card within 10 minutes,30,5 transactions on same card within 10 minutes,0,,0,,True
+tx_000973,2026-05-11 14:00:25,card_038,2.7,Shopify Merchant 2,online_retail,online,CA,CA,dev_52f96bdf,208.54.80.124,30,low,5 transactions on same card within 10 minutes,30,5 transactions on same card within 10 minutes,0,,0,,True
 tx_000974,2026-05-11 14:04:25,card_038,11.57,Shopify Merchant 1,online_retail,online,CA,CA,dev_52f96bdf,208.54.80.124,0,low,,0,,0,,0,,False
 tx_000976,2026-05-11 14:06:56,card_038,4.17,Shopify Merchant 1,online_retail,online,CA,CA,dev_52f96bdf,208.54.80.124,0,low,,0,,0,,0,,False
-tx_000975,2026-05-11 14:08:47,card_038,11.32,AliExpress,online_retail,online,CA,CN,dev_52f96bdf,208.54.80.124,45,low,Merchant country differs from cardholder country; 4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,False
+tx_000975,2026-05-11 14:08:47,card_038,11.32,AliExpress,online_retail,online,CA,CN,dev_52f96bdf,208.54.80.124,45,low,Merchant country differs from cardholder country; 4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,True
 tx_000553,2026-05-11 14:56:19,card_029,40.0,BMO ATM,atm,atm,CA,CA,,,10,low,ATM transaction,0,,0,,0,,False
 tx_000411,2026-05-11 15:57:40,card_021,90.0,Provigo,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000659,2026-05-11 16:10:54,card_035,29.37,Videotron,utilities,online,CA,CA,dev_37f4b88c,24.114.151.64,0,low,,0,,0,,0,,False
@@ -528,10 +528,10 @@ tx_000652,2026-05-12 03:23:59,card_035,15.99,Spotify,subscription,online,CA,SE,d
 tx_000939,2026-05-12 05:12:00,card_023,10.98,Shopify Merchant 2,online_retail,online,CA,CA,dev_c71fd72a,189.144.75.233,0,low,,0,,0,,0,,False
 tx_000940,2026-05-12 05:14:19,card_023,11.58,QuickPay Online,online_retail,online,CA,CA,dev_c71fd72a,189.144.75.233,0,low,,0,,0,,0,,False
 tx_000941,2026-05-12 05:15:28,card_023,9.18,Shopify Merchant 1,online_retail,online,CA,CA,dev_c71fd72a,189.144.75.233,0,low,,0,,0,,0,,False
-tx_000945,2026-05-12 05:15:31,card_023,2.54,Shopify Merchant 1,online_retail,online,CA,CA,dev_c71fd72a,189.144.75.233,30,low,4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,False
-tx_000942,2026-05-12 05:15:46,card_023,7.52,AliExpress,online_retail,online,CA,CN,dev_c71fd72a,189.144.75.233,45,low,Merchant country differs from cardholder country; 5 transactions on same card within 10 minutes,30,5 transactions on same card within 10 minutes,0,,0,,False
-tx_000947,2026-05-12 05:19:04,card_023,1.5,Shopify Merchant 1,online_retail,online,CA,CA,dev_c71fd72a,189.144.75.233,30,low,6 transactions on same card within 10 minutes,30,6 transactions on same card within 10 minutes,0,,0,,False
-tx_000943,2026-05-12 05:20:11,card_023,10.45,QuickPay Online,online_retail,online,CA,CA,dev_c71fd72a,189.144.75.233,30,low,7 transactions on same card within 10 minutes,30,7 transactions on same card within 10 minutes,0,,0,,False
+tx_000945,2026-05-12 05:15:31,card_023,2.54,Shopify Merchant 1,online_retail,online,CA,CA,dev_c71fd72a,189.144.75.233,30,low,4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,True
+tx_000942,2026-05-12 05:15:46,card_023,7.52,AliExpress,online_retail,online,CA,CN,dev_c71fd72a,189.144.75.233,45,low,Merchant country differs from cardholder country; 5 transactions on same card within 10 minutes,30,5 transactions on same card within 10 minutes,0,,0,,True
+tx_000947,2026-05-12 05:19:04,card_023,1.5,Shopify Merchant 1,online_retail,online,CA,CA,dev_c71fd72a,189.144.75.233,30,low,6 transactions on same card within 10 minutes,30,6 transactions on same card within 10 minutes,0,,0,,True
+tx_000943,2026-05-12 05:20:11,card_023,10.45,QuickPay Online,online_retail,online,CA,CA,dev_c71fd72a,189.144.75.233,30,low,7 transactions on same card within 10 minutes,30,7 transactions on same card within 10 minutes,0,,0,,True
 tx_000944,2026-05-12 05:27:34,card_023,2.71,QuickPay Online,online_retail,online,CA,CA,dev_c71fd72a,189.144.75.233,0,low,,0,,0,,0,,False
 tx_000946,2026-05-12 05:33:26,card_023,3.51,Shopify Merchant 2,online_retail,online,CA,CA,dev_c71fd72a,189.144.75.233,0,low,,0,,0,,0,,False
 tx_000948,2026-05-12 05:38:41,card_023,10.26,AliExpress,online_retail,online,CA,CN,dev_c71fd72a,189.144.75.233,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
@@ -606,7 +606,7 @@ tx_000738,2026-05-14 09:11:41,card_039,27.57,Chipotle,restaurant,in_person,GB,GB
 tx_000251,2026-05-14 09:55:57,card_013,255.96,Bell Canada,utilities,online,CA,CA,dev_e5c2222f,24.114.120.141,20,low,Amount is 5.3x this card's median,0,,0,,0,,False
 tx_000314,2026-05-14 10:18:17,card_017,14.67,Schwartz's,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000097,2026-05-14 10:47:44,card_005,7.21,Whole Foods,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
-tx_000861,2026-05-14 11:56:33,card_046,200.0,RBC ATM,atm,atm,CA,CA,,,30,low,Amount is 5.8x this card's median; ATM transaction,0,,0,,0,,False
+tx_000861,2026-05-14 11:56:33,card_046,200.0,RBC ATM,atm,atm,CA,CA,,,30,low,Amount is 5.8x this card's median; ATM transaction,0,,0,,0,,True
 tx_000122,2026-05-14 12:13:17,card_007,40.0,RBC ATM,atm,atm,US,US,,,10,low,ATM transaction,0,,0,,0,,False
 tx_000636,2026-05-14 14:05:08,card_034,13.51,Shell,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000298,2026-05-14 14:05:33,card_016,24.01,Petro-Canada,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
@@ -625,14 +625,14 @@ tx_000591,2026-05-14 21:24:09,card_032,40.94,Provigo,grocery,in_person,CA,CA,,,0
 tx_000957,2026-05-14 21:46:00,card_049,11.64,Shopify Merchant 1,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,0,low,,0,,0,,0,,False
 tx_000959,2026-05-14 21:47:14,card_049,11.1,AliExpress,online_retail,online,CA,CN,dev_2520e98b,117.136.220.191,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000958,2026-05-14 21:47:42,card_049,1.51,Shopify Merchant 2,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,0,low,,0,,0,,0,,False
-tx_000960,2026-05-14 21:47:48,card_049,10.9,QuickPay Online,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,30,low,4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,False
-tx_000963,2026-05-14 21:50:55,card_049,8.44,Shopify Merchant 2,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,30,low,5 transactions on same card within 10 minutes,30,5 transactions on same card within 10 minutes,0,,0,,False
-tx_000965,2026-05-14 21:52:41,card_049,14.88,AliExpress,online_retail,online,CA,CN,dev_2520e98b,117.136.220.191,45,low,Merchant country differs from cardholder country; 6 transactions on same card within 10 minutes,30,6 transactions on same card within 10 minutes,0,,0,,False
+tx_000960,2026-05-14 21:47:48,card_049,10.9,QuickPay Online,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,30,low,4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,True
+tx_000963,2026-05-14 21:50:55,card_049,8.44,Shopify Merchant 2,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,30,low,5 transactions on same card within 10 minutes,30,5 transactions on same card within 10 minutes,0,,0,,True
+tx_000965,2026-05-14 21:52:41,card_049,14.88,AliExpress,online_retail,online,CA,CN,dev_2520e98b,117.136.220.191,45,low,Merchant country differs from cardholder country; 6 transactions on same card within 10 minutes,30,6 transactions on same card within 10 minutes,0,,0,,True
 tx_000194,2026-05-14 21:58:18,card_010,94.84,Chevron,gas,in_person,US,US,,,10,low,Amount is 3.4x this card's median,0,,0,,0,,False
 tx_000962,2026-05-14 21:59:00,card_049,4.15,Shopify Merchant 2,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,0,low,,0,,0,,0,,False
-tx_000961,2026-05-14 21:59:04,card_049,10.72,QuickPay Online,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,30,low,4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,False
+tx_000961,2026-05-14 21:59:04,card_049,10.72,QuickPay Online,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,30,low,4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,True
 tx_000967,2026-05-14 22:04:31,card_049,12.82,QuickPay Online,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,0,low,,0,,0,,0,,False
-tx_000964,2026-05-14 22:08:56,card_049,9.56,Shopify Merchant 2,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,30,low,4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,False
+tx_000964,2026-05-14 22:08:56,card_049,9.56,Shopify Merchant 2,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,30,low,4 transactions on same card within 10 minutes,30,4 transactions on same card within 10 minutes,0,,0,,True
 tx_000966,2026-05-14 22:11:52,card_049,2.63,QuickPay Online,online_retail,online,CA,CA,dev_2520e98b,117.136.220.191,0,low,,0,,0,,0,,False
 tx_000852,2026-05-14 22:25:31,card_045,24.44,Shopify Merchant 1,online_retail,online,FR,CA,dev_ba413b67,176.158.197.86,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000049,2026-05-14 22:38:57,card_002,16.66,QuickPay Online,online_retail,online,CA,CA,dev_6200257c,142.112.102.86,0,low,,0,,0,,0,,False
@@ -658,7 +658,7 @@ tx_000666,2026-05-15 08:37:50,card_036,87.55,Petro-Canada,gas,in_person,CA,CA,,,
 tx_000606,2026-05-15 08:53:35,card_033,228.35,Cafe Olimpico,restaurant,in_person,GB,GB,,,10,low,Amount is 3.7x this card's median,0,,0,,0,,False
 tx_000833,2026-05-15 09:30:48,card_044,143.0,Shopify Merchant 2,online_retail,online,GB,CA,dev_98e65b27,86.150.201.35,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000905,2026-05-15 10:42:01,card_049,15.99,Disney+,subscription,online,CA,US,dev_2d66c302,70.50.165.21,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
-tx_000417,2026-05-15 11:04:16,card_022,200.0,Desjardins ATM,atm,atm,CA,CA,,,30,low,Amount is 6.0x this card's median; ATM transaction,0,,0,,0,,False
+tx_000417,2026-05-15 11:04:16,card_022,200.0,Desjardins ATM,atm,atm,CA,CA,,,30,low,Amount is 6.0x this card's median; ATM transaction,0,,0,,0,,True
 tx_000647,2026-05-15 11:48:47,card_035,37.14,McDonald's,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000330,2026-05-15 12:12:47,card_018,80.0,Desjardins ATM,atm,atm,CA,CA,,,10,low,ATM transaction,0,,0,,0,,False
 tx_000596,2026-05-15 12:46:40,card_032,158.28,McDonald's,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
@@ -681,11 +681,11 @@ tx_000744,2026-05-15 23:43:02,card_040,36.57,Chevron,gas,in_person,CA,CA,,,0,low
 tx_000354,2026-05-16 01:02:58,card_019,34.67,Whole Foods,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000583,2026-05-16 01:28:46,card_031,80.0,RBC ATM,atm,atm,CA,CA,,,10,low,ATM transaction,0,,0,,0,,False
 tx_000246,2026-05-16 02:15:39,card_012,10.15,Amazon.com,online_retail,online,CA,US,dev_08e633ee,99.225.9.230,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
-tx_000911,2026-05-16 02:29:15,card_049,100.0,RBC ATM,atm,atm,CA,CA,,,30,low,Amount is 6.3x this card's median; ATM transaction,0,,0,,0,,False
-tx_000907,2026-05-16 03:25:33,card_049,85.75,eBay,online_retail,online,CA,US,dev_2d66c302,24.114.57.18,35,low,Amount is 5.4x this card's median; Merchant country differs from cardholder country,0,,0,,0,,False
+tx_000911,2026-05-16 02:29:15,card_049,100.0,RBC ATM,atm,atm,CA,CA,,,30,low,Amount is 6.3x this card's median; ATM transaction,0,,0,,0,,True
+tx_000907,2026-05-16 03:25:33,card_049,85.75,eBay,online_retail,online,CA,US,dev_2d66c302,24.114.57.18,35,low,Amount is 5.4x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
 tx_000106,2026-05-16 03:37:30,card_006,16.32,Esso,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000503,2026-05-16 04:02:11,card_027,100.0,RBC ATM,atm,atm,CA,CA,,,20,low,Amount is 3.0x this card's median; ATM transaction,0,,0,,0,,False
-tx_000906,2026-05-16 04:31:46,card_049,536.35,Amazon.ca,online_retail,online,CA,CA,dev_2d66c302,70.50.179.16,35,low,Amount is 33.5x this card's median,0,,0,,0,,False
+tx_000906,2026-05-16 04:31:46,card_049,536.35,Amazon.ca,online_retail,online,CA,CA,dev_2d66c302,70.50.179.16,35,low,Amount is 33.5x this card's median,0,,0,,0,,True
 tx_000913,2026-05-16 04:41:55,card_049,32.77,QuickPay Online,online_retail,online,CA,CA,dev_2d66c302,99.225.25.225,0,low,,0,,0,,0,,False
 tx_000555,2026-05-16 04:46:13,card_029,9.55,Chevron,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000831,2026-05-16 05:58:24,card_044,10.84,AliExpress,online_retail,online,GB,CN,dev_8ae75196,151.225.39.13,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
@@ -707,7 +707,7 @@ tx_000805,2026-05-16 17:30:35,card_043,21.73,Hydro-Quebec,utilities,online,CA,CA
 tx_000557,2026-05-16 18:53:51,card_030,19.88,Whole Foods,grocery,in_person,DE,DE,,,0,low,,0,,0,,0,,False
 tx_000548,2026-05-16 19:06:05,card_029,31.22,Etsy,online_retail,online,CA,US,dev_600be23f,99.225.174.214,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000545,2026-05-16 19:57:53,card_029,12.25,Hydro-Quebec,utilities,online,CA,CA,dev_600be23f,99.225.96.67,0,low,,0,,0,,0,,False
-tx_000183,2026-05-16 20:31:44,card_009,59.32,AliExpress,online_retail,online,US,CN,dev_b62b3697,73.15.206.136,25,low,Amount is 3.3x this card's median; Merchant country differs from cardholder country,0,,0,,0,,False
+tx_000183,2026-05-16 20:31:44,card_009,59.32,AliExpress,online_retail,online,US,CN,dev_b62b3697,73.15.206.136,25,low,Amount is 3.3x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
 tx_000443,2026-05-16 22:17:32,card_023,6.87,eBay,online_retail,online,CA,US,dev_72d3f36b,24.114.163.220,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000703,2026-05-16 22:39:12,card_037,92.86,Provigo,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000655,2026-05-16 23:16:52,card_035,15.99,Netflix,subscription,online,CA,US,dev_37f4b88c,142.112.95.71,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
@@ -736,10 +736,10 @@ tx_000107,2026-05-17 13:06:41,card_006,10.62,McDonald's,restaurant,in_person,CA,
 tx_000154,2026-05-17 14:07:55,card_008,29.46,Shopify Merchant 2,online_retail,online,CA,CA,dev_a088f010,99.225.166.144,0,low,,0,,0,,0,,False
 tx_001005,2026-05-17 14:10:26,card_037,311.05,QuickPay Online,online_retail,online,CA,CA,dev_f51148d2,172.58.223.233,20,low,Amount is 5.9x this card's median,0,,0,,0,,False
 tx_001003,2026-05-17 14:11:07,card_009,835.4,QuickPay Online,online_retail,online,US,CA,dev_6b84a60e,172.58.128.27,50,medium,Amount is 46.3x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
-tx_001006,2026-05-17 14:20:42,card_030,345.74,QuickPay Online,online_retail,online,DE,CA,dev_eecda7b1,208.54.240.254,35,low,Amount is 10.0x this card's median; Merchant country differs from cardholder country,0,,0,,0,,False
+tx_001006,2026-05-17 14:20:42,card_030,345.74,QuickPay Online,online_retail,online,DE,CA,dev_eecda7b1,208.54.240.254,35,low,Amount is 10.0x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
 tx_001001,2026-05-17 14:53:49,card_036,426.59,QuickPay Online,online_retail,online,CA,CA,dev_d77b2e23,172.58.244.57,20,low,Amount is 8.5x this card's median,0,,0,,0,,False
-tx_001004,2026-05-17 15:09:02,card_029,724.05,QuickPay Online,online_retail,online,CA,CA,dev_d0e72b61,172.58.68.100,35,low,Amount is 21.6x this card's median,0,,0,,0,,False
-tx_001007,2026-05-17 15:20:50,card_040,579.49,QuickPay Online,online_retail,online,CA,CA,dev_fe70507a,172.58.33.50,35,low,Amount is 28.8x this card's median,0,,0,,0,,False
+tx_001004,2026-05-17 15:09:02,card_029,724.05,QuickPay Online,online_retail,online,CA,CA,dev_d0e72b61,172.58.68.100,35,low,Amount is 21.6x this card's median,0,,0,,0,,True
+tx_001007,2026-05-17 15:20:50,card_040,579.49,QuickPay Online,online_retail,online,CA,CA,dev_fe70507a,172.58.33.50,35,low,Amount is 28.8x this card's median,0,,0,,0,,True
 tx_001002,2026-05-17 15:22:21,card_007,820.61,QuickPay Online,online_retail,online,US,CA,dev_399a3e32,73.15.130.57,50,medium,Amount is 20.5x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
 tx_000842,2026-05-17 17:10:22,card_045,46.74,Amazon.ca,online_retail,online,FR,CA,dev_ba413b67,176.158.226.64,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000562,2026-05-17 17:54:19,card_030,35.55,Starbucks,restaurant,in_person,DE,DE,,,0,low,,0,,0,,0,,False
@@ -804,7 +804,7 @@ tx_000477,2026-05-19 13:07:23,card_025,15.99,Spotify,subscription,online,CA,SE,d
 tx_000461,2026-05-19 13:29:58,card_024,17.54,IGA,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000597,2026-05-19 14:59:41,card_032,63.02,AliExpress,online_retail,online,CA,CN,dev_52854151,99.225.17.161,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000542,2026-05-19 16:14:26,card_029,35.82,AliExpress,online_retail,online,CA,CN,dev_72eedf3c,99.225.95.3,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
-tx_000923,2026-05-19 16:17:03,card_036,614.82,Air Canada,travel,online,CA,CA,dev_f8ffc747,99.225.215.80,45,low,Amount is 12.3x this card's median; Travel purchase,0,,0,,0,,False
+tx_000923,2026-05-19 16:17:03,card_036,614.82,Air Canada,travel,online,CA,CA,dev_f8ffc747,99.225.215.80,45,low,Amount is 12.3x this card's median; Travel purchase,0,,0,,0,,True
 tx_000002,2026-05-19 17:02:20,card_000,39.34,Shell,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000205,2026-05-19 17:27:26,card_011,25.43,McDonald's,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000166,2026-05-19 17:30:23,card_008,18.64,Chipotle,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
@@ -818,7 +818,7 @@ tx_000071,2026-05-20 00:07:49,card_003,61.8,Amazon.ca,online_retail,online,CA,CA
 tx_000379,2026-05-20 01:33:44,card_020,16.09,Chevron,gas,in_person,US,US,,,0,low,,0,,0,,0,,False
 tx_000763,2026-05-20 01:43:35,card_041,26.41,Metro,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000599,2026-05-20 01:45:18,card_032,40.0,Desjardins ATM,atm,atm,CA,CA,,,10,low,ATM transaction,0,,0,,0,,False
-tx_000824,2026-05-20 01:54:37,card_044,277.64,QuickPay Online,online_retail,online,GB,CA,dev_8ae75196,151.225.63.111,35,low,Amount is 5.4x this card's median; Merchant country differs from cardholder country,0,,0,,0,,False
+tx_000824,2026-05-20 01:54:37,card_044,277.64,QuickPay Online,online_retail,online,GB,CA,dev_8ae75196,151.225.63.111,35,low,Amount is 5.4x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
 tx_000592,2026-05-20 02:16:42,card_032,108.65,Tim Hortons,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000646,2026-05-20 03:01:33,card_035,15.99,Disney+,subscription,online,CA,US,dev_37f4b88c,70.50.79.29,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000804,2026-05-20 03:49:37,card_043,11.18,Hydro-Quebec,utilities,online,CA,CA,dev_c832252e,142.112.148.67,0,low,,0,,0,,0,,False
@@ -840,7 +840,7 @@ tx_000506,2026-05-20 14:00:14,card_027,17.83,Loblaws,grocery,in_person,CA,CA,,,0
 tx_000367,2026-05-20 14:29:49,card_019,46.05,eBay,online_retail,online,CA,US,dev_95204a30,99.225.182.196,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000347,2026-05-20 15:29:41,card_018,33.07,Schwartz's,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000449,2026-05-20 15:40:10,card_024,30.56,Chevron,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
-tx_000435,2026-05-20 16:27:43,card_023,79.77,eBay,online_retail,online,CA,US,dev_72d3f36b,70.50.197.113,35,low,Amount is 7.1x this card's median; Merchant country differs from cardholder country,0,,0,,0,,False
+tx_000435,2026-05-20 16:27:43,card_023,79.77,eBay,online_retail,online,CA,US,dev_72d3f36b,70.50.197.113,35,low,Amount is 7.1x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
 tx_000299,2026-05-20 18:34:44,card_016,106.0,Bell Canada,utilities,online,CA,CA,dev_bc979ff9,24.114.83.26,0,low,,0,,0,,0,,False
 tx_000808,2026-05-20 19:02:46,card_043,40.31,Etsy,online_retail,online,CA,US,dev_c832252e,24.114.75.27,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000933,2026-05-20 19:29:09,card_045,52.08,Joe Beef,restaurant,in_person,FR,FR,,,0,low,,0,,0,,0,,False
@@ -894,7 +894,7 @@ tx_000519,2026-05-22 01:46:15,card_028,132.25,Chevron,gas,in_person,CA,CA,,,0,lo
 tx_000730,2026-05-22 01:50:24,card_039,22.42,Starbucks,restaurant,in_person,GB,GB,,,0,low,,0,,0,,0,,False
 tx_000144,2026-05-22 02:13:08,card_008,8.56,Chevron,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000704,2026-05-22 02:28:32,card_038,40.0,BMO ATM,atm,atm,CA,CA,,,10,low,ATM transaction,0,,0,,0,,False
-tx_000874,2026-05-22 02:32:26,card_047,73.01,Amazon.com,online_retail,online,CA,US,dev_dcad83da,70.50.88.152,25,low,Amount is 3.2x this card's median; Merchant country differs from cardholder country,0,,0,,0,,False
+tx_000874,2026-05-22 02:32:26,card_047,73.01,Amazon.com,online_retail,online,CA,US,dev_dcad83da,70.50.88.152,25,low,Amount is 3.2x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
 tx_000820,2026-05-22 04:24:14,card_044,54.65,La Banquise,restaurant,in_person,GB,GB,,,0,low,,0,,0,,0,,False
 tx_000863,2026-05-22 04:36:04,card_046,28.92,Starbucks,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000402,2026-05-22 05:31:42,card_021,28.65,Metro,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
@@ -916,7 +916,7 @@ tx_000556,2026-05-22 12:24:32,card_029,47.02,McDonald's,restaurant,in_person,CA,
 tx_000020,2026-05-22 13:34:35,card_001,132.86,Hydro-Quebec,utilities,online,CA,CA,dev_8080a2c9,142.112.199.194,0,low,,0,,0,,0,,False
 tx_000236,2026-05-22 13:51:36,card_012,13.01,Shopify Merchant 1,online_retail,online,CA,CA,dev_08e633ee,142.112.143.27,0,low,,0,,0,,0,,False
 tx_000934,2026-05-22 14:52:23,card_048,15.47,QuickPay Online,online_retail,online,CA,CA,dev_01dc5240,24.114.112.177,0,low,,0,,0,,0,,False
-tx_000190,2026-05-22 15:40:00,card_010,115.62,Shopify Merchant 2,online_retail,online,US,CA,dev_94ddeaf2,73.15.50.109,25,low,Amount is 4.1x this card's median; Merchant country differs from cardholder country,0,,0,,0,,False
+tx_000190,2026-05-22 15:40:00,card_010,115.62,Shopify Merchant 2,online_retail,online,US,CA,dev_94ddeaf2,73.15.50.109,25,low,Amount is 4.1x this card's median; Merchant country differs from cardholder country,0,,0,,0,,True
 tx_000033,2026-05-22 15:59:57,card_001,22.87,AliExpress,online_retail,online,CA,CN,dev_8d790a73,142.112.59.148,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000309,2026-05-22 16:16:23,card_016,44.01,Cineplex,entertainment,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000791,2026-05-22 17:22:02,card_042,15.65,Tim Hortons,restaurant,in_person,US,US,,,0,low,,0,,0,,0,,False
@@ -930,7 +930,7 @@ tx_000492,2026-05-22 22:02:16,card_026,15.99,Netflix,subscription,online,US,US,d
 tx_000762,2026-05-22 23:01:44,card_041,11.99,Netflix,subscription,online,CA,US,dev_614ef198,99.225.180.83,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000502,2026-05-23 01:32:21,card_027,32.0,Joe Beef,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000818,2026-05-23 03:53:51,card_044,4.56,AliExpress,online_retail,online,GB,CN,dev_8ae75196,86.150.97.181,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
-tx_000541,2026-05-23 04:59:24,card_029,200.0,BMO ATM,atm,atm,CA,CA,,,30,low,Amount is 6.0x this card's median; ATM transaction,0,,0,,0,,False
+tx_000541,2026-05-23 04:59:24,card_029,200.0,BMO ATM,atm,atm,CA,CA,,,30,low,Amount is 6.0x this card's median; ATM transaction,0,,0,,0,,True
 tx_000269,2026-05-23 06:03:35,card_014,57.98,Cineplex,entertainment,in_person,FR,FR,,,10,low,Amount is 3.2x this card's median,0,,0,,0,,False
 tx_000290,2026-05-23 06:07:53,card_015,102.6,Videotron,utilities,online,CA,CA,dev_22a1b746,99.225.114.61,0,low,,0,,0,,0,,False
 tx_000046,2026-05-23 06:53:57,card_002,19.94,Whole Foods,grocery,in_person,CA,CA,,,0,low,,0,,0,,0,,False
@@ -950,7 +950,7 @@ tx_000601,2026-05-23 12:08:59,card_032,74.54,Schwartz's,restaurant,in_person,CA,
 tx_000798,2026-05-23 12:24:50,card_042,19.78,Schwartz's,restaurant,in_person,US,US,,,0,low,,0,,0,,0,,False
 tx_000016,2026-05-23 12:29:14,card_000,87.62,Chevron,gas,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000171,2026-05-23 12:33:59,card_009,9.99,Spotify,subscription,online,US,SE,dev_b62b3697,98.207.152.41,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
-tx_000498,2026-05-23 13:14:34,card_027,200.0,RBC ATM,atm,atm,CA,CA,,,30,low,Amount is 6.1x this card's median; ATM transaction,0,,0,,0,,False
+tx_000498,2026-05-23 13:14:34,card_027,200.0,RBC ATM,atm,atm,CA,CA,,,30,low,Amount is 6.1x this card's median; ATM transaction,0,,0,,0,,True
 tx_000834,2026-05-23 16:05:54,card_044,176.63,Metro,grocery,in_person,GB,GB,,,10,low,Amount is 3.4x this card's median,0,,0,,0,,False
 tx_000439,2026-05-23 17:58:53,card_023,24.44,Amazon.ca,online_retail,online,CA,CA,dev_72d3f36b,24.114.127.133,0,low,,0,,0,,0,,False
 tx_000237,2026-05-23 18:59:04,card_012,28.66,Etsy,online_retail,online,CA,US,dev_08e633ee,24.114.89.6,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
@@ -962,7 +962,7 @@ tx_000026,2026-05-23 23:29:04,card_001,84.21,Bell Canada,utilities,online,CA,CA,
 tx_000208,2026-05-23 23:52:43,card_011,8.57,Starbucks,restaurant,in_person,CA,CA,,,0,low,,0,,0,,0,,False
 tx_000191,2026-05-24 01:39:42,card_010,43.05,McDonald's,restaurant,in_person,US,US,,,0,low,,0,,0,,0,,False
 tx_000296,2026-05-24 02:07:06,card_015,23.86,Etsy,online_retail,online,CA,US,dev_22a1b746,70.50.209.7,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
-tx_000042,2026-05-24 02:24:37,card_002,200.0,BMO ATM,atm,atm,CA,CA,,,45,low,Amount is 10.0x this card's median; ATM transaction,0,,0,,0,,False
+tx_000042,2026-05-24 02:24:37,card_002,200.0,BMO ATM,atm,atm,CA,CA,,,45,low,Amount is 10.0x this card's median; ATM transaction,0,,0,,0,,True
 tx_000371,2026-05-24 02:52:26,card_020,11.99,Disney+,subscription,online,US,US,dev_2877f7d9,73.15.118.228,0,low,,0,,0,,0,,False
 tx_000723,2026-05-24 03:07:35,card_039,7.53,eBay,online_retail,online,GB,US,dev_2ab5d40f,151.225.51.247,15,low,Merchant country differs from cardholder country,0,,0,,0,,False
 tx_000109,2026-05-24 03:23:33,card_006,23.93,Videotron,utilities,online,CA,CA,dev_1321b774,99.225.23.133,0,low,,0,,0,,0,,False
