@@ -42,13 +42,13 @@
 .review-card {
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--bg);
+  background: var(--surface);
   width: 100%;
   box-sizing: border-box;
 }
 
 .review-card--active {
-  border-color: var(--text-h);
+  border-color: var(--accent);
   box-shadow: var(--shadow);
 }
 
@@ -92,9 +92,9 @@
   font-weight: 600;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
-  color: var(--text-h);
+  color: var(--accent);
   background: transparent;
-  border: 2px solid var(--text-h);
+  border: 2px solid var(--accent);
 }
 
 .review-card__body {
@@ -105,8 +105,8 @@
   margin: 0 0 1.25rem;
   padding: 0.85rem 1rem;
   border-radius: 6px;
-  background: transparent;
-  border: 2px solid var(--text-h);
+  background: var(--accent-bg);
+  border: 2px solid var(--accent-border);
   color: var(--text-h);
   line-height: 1.45;
   overflow-wrap: anywhere;
@@ -165,7 +165,7 @@
 }
 
 .review-card__risk--low {
-  color: var(--text-h);
+  color: var(--accent);
 }
 
 .review-card__actions {
@@ -176,21 +176,21 @@
 
 .review-card__action {
   font: inherit;
-  font-weight: 500;
+  font-weight: 600;
   border-radius: 6px;
   padding: 0.55rem 1rem;
   cursor: pointer;
-  color: var(--text-h);
+  color: var(--accent);
   background: transparent;
-  border: 2px solid var(--text-h);
+  border: 2px solid var(--accent);
 }
 
 .review-card__action:hover:not(:disabled) {
-  opacity: 0.82;
+  opacity: 0.85;
 }
 
 .review-card__action:focus-visible {
-  outline: 2px solid var(--text-h);
+  outline: 2px solid var(--accent-light);
   outline-offset: 2px;
 }
 
@@ -203,8 +203,8 @@
 .review-queue__complete {
   padding: 1rem 1.25rem;
   border-radius: 8px;
-  border: 2px solid var(--text-h);
-  background: transparent;
+  border: 2px solid var(--accent);
+  background: var(--accent-bg);
   color: var(--text-h);
 }
 

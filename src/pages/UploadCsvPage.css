@@ -69,9 +69,9 @@
   padding: 12px 18px;
   font-weight: 700;
   cursor: pointer;
-  color: var(--text-h);
+  color: var(--accent);
   background: transparent;
-  border: 2px solid var(--text-h);
+  border: 2px solid var(--accent);
 }
 
 .upload-box button:hover:not(:disabled) {
